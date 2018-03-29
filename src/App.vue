@@ -1,15 +1,17 @@
 <template>
   <div id="app">
-    <test></test>
+    <!-- <test msg="新的值"></test> -->
+    <user></user>
   </div>
 </template>
 
 <script>
 import Test from './components/test'
+import User from './components/user'
 export default {
   name: 'App',
   components: {
-    Test
+    Test,User
   }
 }
 </script>
