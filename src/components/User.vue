@@ -9,7 +9,7 @@
       </form>
       <!-- 展示用户信息 -->
       <ul>
-          <li v-for="user in users">
+          <li v-for="user in users " :key='user'>
               <input type="checkbox" class="toggle" v-model="user.contacted">
               <span :class="{contacted:user.contacted}">
                     {{user.name}}:{{user.email}}
