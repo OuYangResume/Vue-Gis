@@ -6,6 +6,7 @@ import Resource from 'vue-resource'
 import App from './App'
 import Test from './components/test'
 import User from './components/user'
+import Translate from './components/translate'
 
 Vue.use(VueRouter)
 Vue.use(Resource)
@@ -14,28 +15,23 @@ Vue.config.productionTip = false
 
 //设置路由
 const router = new VueRouter({
-  mode:'history',
-  base:__dirname,
-  routes:[
+  mode: 'history',
+  base: __dirname,
+  routes: [
     {
-      path:"/",component:User
-    },{
-      path:"/test",component:Test
+      path: "/", component: User
+    }, {
+      path: "/test", component: Test
+    },
+    {
+      path:"/Translate",
+      component: Translate,
     }
   ]
 })
-/* eslint-disable no-new */
 new Vue({
+  el: '#app',
   router,
-  template: `
-    <div id="app">
-    <ul>
-      <li>
-        <router-link to="/">Users</router-link>
-         <router-link to="/test">Test</router-link>
-      </li>
-    </ul>
-    <router-view></router-view>
-    </div>
-  `
-}).$mount("#app")
+  components: { App },
+  template: '<App/>'
+})

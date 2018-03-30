@@ -19,7 +19,7 @@
 
         <!-- 键盘事件 -->
         <input type="text" v-on:keyup="pressKey" v-on:keyup.enter="enterHit">
-        <hr>
+      
         <!-- computed 计算属性 -->
         <label for="">First Name:</label>
         <input type="text" v-model="user.firstName">
