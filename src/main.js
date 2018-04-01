@@ -7,6 +7,7 @@ import App from './App'
 import Test from './components/test'
 import User from './components/user'
 import Translate from './components/translate'
+import Map from './components/map/mapContainer'
 
 Vue.use(VueRouter)
 Vue.use(Resource)
@@ -26,6 +27,10 @@ const router = new VueRouter({
     {
       path:"/Translate",
       component: Translate,
+    },
+    {
+      path:'/map',
+      component:Map
     }
   ]
 })

@@ -4,19 +4,18 @@
         <router-link to="/">Users</router-link>|
           <router-link to="/test">Test</router-link>|
           <router-link to="/Translate">在线翻译</router-link>
+          <router-link to="/map">地图</router-link>
     </div>
      <router-view></router-view>
      </div>
 </template>
 
 <script>
-import Test from "./components/test";
-import User from "./components/user";
+
 export default {
   name: "App",
   components: {
-    Test,
-    User
+   
   }
 };
 </script>
