@@ -41,7 +41,8 @@ L.TileLayer.MapProvider.providers = {
         Normal: { //正常的
             Map: '//webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}',
         },
-        Satellite: {//影像
+        Satellite: {
+            //影像
             Map: '//webst0{s}.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}',
             //标注
             Annotion: '//webst0{s}.is.autonavi.com/appmaptile?style=8&x={x}&y={y}&z={z}'

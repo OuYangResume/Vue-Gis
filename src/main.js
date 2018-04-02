@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Resource from 'vue-resource'
+
 import App from './App'
 import Test from './components/test'
 import User from './components/user'
@@ -11,6 +12,7 @@ import Map from './components/map/mapContainer'
 
 Vue.use(VueRouter)
 Vue.use(Resource)
+
 
 Vue.config.productionTip = false
 
