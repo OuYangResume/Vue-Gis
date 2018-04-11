@@ -1,7 +1,7 @@
 <template>
-  <div class="col-md-12">
-     <h1>{{msg}}</h1> 
-     <h5 class="text-muted">简单 / 易用 / 便捷</h5>
+  <div>
+     <h1 class="col-md-12">{{msg}}</h1> 
+     <h5 class="text-muted col-md-12 ">简单 / 易用 / 便捷</h5>
  <translateForm  v-on:formSubmit1="translateText"></translateForm>
  <TranslateOutput v-text="translatedText"></TranslateOutput>
   </div>

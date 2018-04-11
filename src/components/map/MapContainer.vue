@@ -69,7 +69,7 @@ export default {
       var redMarker = L.AwesomeMarkers.icon({
         prefix: "fa",
         icon: "home",
-        markerColor: "blue",
+        markerColor: "red",
         iconColor: "white"
       });
       var point = L.marker([37.5, 106], { icon: redMarker });
@@ -197,7 +197,7 @@ export default {
   created() {
     //获取数据
     this.$http.get("../../../static/data/county.json").then(response => {
-      console.log(response);
+      // console.log(response);
       return (this.dataTest = response.body[0].items);
     });
   }

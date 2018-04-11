@@ -1,5 +1,5 @@
 <template>
-  <div class="user">
+  <div id="user" class="">
       <h1>Users</h1>
       <!-- 添加用户信息 -->
       <form v-on:submit="addUser">

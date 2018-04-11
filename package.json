@@ -10,6 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "echarts": "^4.0.4",
     "heatmap.js": "^2.0.5",
     "leaflet-easybutton": "^2.3.0",
     "leaflet.markercluster": "^1.3.0",

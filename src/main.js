@@ -3,16 +3,19 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Resource from 'vue-resource'
+import echarts from 'echarts'
 
 import App from './App'
 import Test from './components/test'
 import User from './components/user'
 import Translate from './components/translate'
 import Map from './components/map/mapContainer'
+import EchartsFull from './components/echarts/echartsFull'
 
 Vue.use(VueRouter)
 Vue.use(Resource)
 
+Vue.prototype.$echarts = echarts
 
 Vue.config.productionTip = false
 
@@ -33,6 +36,10 @@ const router = new VueRouter({
     {
       path:'/map',
       component:Map
+    },
+    {
+      path:'/echarts',
+      component:EchartsFull
     }
   ]
 })

@@ -1,5 +1,5 @@
 <template>
-          <div class="row">
+          <div class="row" id="translateForm">
          <form class=" form-inline" v-on:submit="formSubmit" id="transFrom">  
           <input type="text" class="form-control col-md-5" v-model="textToTranslate" placeholder="输入需要翻译的内容">
           <select class="form-control" v-model="language">
