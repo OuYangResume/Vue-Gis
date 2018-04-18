@@ -11,6 +11,7 @@ import User from './components/user'
 import Translate from './components/translate'
 import Map from './components/map/mapContainer'
 import EchartsFull from './components/echarts/echartsFull'
+import echartsData from './components/echarts/echartsData'
 
 Vue.use(VueRouter)
 Vue.use(Resource)
@@ -39,7 +40,13 @@ const router = new VueRouter({
     },
     {
       path:'/echarts',
-      component:EchartsFull
+      component:echartsData,
+      children:[
+        {
+          path:'/',
+          component:EchartsFull
+        }
+      ]
     }
   ]
 })

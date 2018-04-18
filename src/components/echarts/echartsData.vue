@@ -1,29 +1,34 @@
 <template>
-  <div id="echartsData" class="col-md-2"> 
-      <!-- {{echartData.day.xData[0]}} -->
-      <button v-on:click="outPutData"> 生成图形</button>
+  <div id="echartsData"> 
+      {{$store.state.count}}--{{count}}
+      <router-view :echartData="echartData"></router-view>
+      <button v-on:click="$store.commit('add')">+</button>
+      <button v-on:click="$store.commit('reduce')">-</button>
   </div>
 </template>
 
 <script>
+import store from '@/vuex/store';
+import { mapState } from 'vuex';
 export default {
   name: "echartsData",
   data() {
     return {
-        echartData:""
+     
     };
   },
   created(){
-     this.$http.get("../../../static/data/echartData.json").then(response => {
-      // console.log(response.body);
-      this.echartData=response.body;
-    });
+    //  this.$http.get("../../../static/data/echartData.json").then(response => {
+    //   console.log(response.body);
+    //   this.echartData=response.body;
+    // });
   },
-  methods:{
-    "outPutData":function(e){
-        this.$emit("outPutData1", this.echartData); //注册事件
-        e.preventDefault();
-    }
-  }
+  computed:{
+    ...mapState({
+    count:state=>state.count
+    }),
+    
+  },
+ store,
 };
 </script>

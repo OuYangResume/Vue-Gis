@@ -5,11 +5,19 @@
 </template>
 
 <script>
+import store from '@/vuex/store'
+import { mapState } from 'vuex'
 export default {
   name: "echartsMap",
-  props:[
-            "getEchartsData"
-        ],
+  store,
+  props: {
+    impChartData: {
+      type: Object
+    },
+    setChartData: {
+      type: Object
+    }
+  },
   data() {
     return {
         aa:"echartsMap"
@@ -24,13 +32,15 @@ export default {
             title: { text: '在Vue中使用echarts' },
             tooltip: {},
             xAxis: {
-                data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+                // data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+                data:this.echartData.day.xData
             },
             yAxis: {},
             series: [{
                 name: '销量',
                 type: 'bar',
-                data: [5, 20, 36, 10, 10, 20]
+                // data: [5, 20, 36, 10, 10, 20]
+                 data:this.$store.state.echartData.day.yData
             }]
         });
     },
@@ -38,6 +48,12 @@ export default {
   },
   mounted(){
      this.drawLine();
+  },
+  created(){
+    console.log(this.impChartData)
+  },
+  computed:{
+    ...mapState(['echartData'])
   }
 };
 </script>
