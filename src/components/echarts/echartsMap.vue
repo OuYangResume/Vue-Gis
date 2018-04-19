@@ -1,6 +1,6 @@
 <template>
   <div id="echartsMap" class="col-md-10" style="height:800px">
-    
+   
   </div>
 </template>
 
@@ -11,12 +11,7 @@ export default {
   name: "echartsMap",
   store,
   props: {
-    impChartData: {
-      type: Object
-    },
-    setChartData: {
-      type: Object
-    }
+  
   },
   data() {
     return {
@@ -33,14 +28,14 @@ export default {
             tooltip: {},
             xAxis: {
                 // data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
-                data:this.echartData.day.xData
+                data:this.$store.state.impData.xData
             },
             yAxis: {},
             series: [{
                 name: '销量',
                 type: 'bar',
                 // data: [5, 20, 36, 10, 10, 20]
-                 data:this.$store.state.echartData.day.yData
+                 data:this.$store.state.impData.yData
             }]
         });
     },
@@ -53,7 +48,7 @@ export default {
     console.log(this.impChartData)
   },
   computed:{
-    ...mapState(['echartData'])
+    ...mapState(['echartData','impData'])
   }
 };
 </script>

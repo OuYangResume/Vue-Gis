@@ -4,7 +4,12 @@ import Vuex from 'vuex'
 Vue.use(Vuex);
 
 const state ={
+    
     count:1,
+    impData:{
+            "xData": ["06/11", "06/12", "06/13", "06/14", "06/15", "06/16", "06/17"],
+            "yData": [34, 38, 30, 28, 45, 49, 37]
+    },
     echartData:{
         "day": {
           "xData": ["06/11", "06/12", "06/13", "06/14", "06/15", "06/16", "06/17"],
@@ -21,12 +26,16 @@ const state ={
       }
 }
 const mutations={
-    add(state){
-        state.count++;
+    add(state,n){
+        state.count+=n;
     },
     reduce(state){
         state.count--;
-    }
+    },
+    select(state,type) {
+        state.impData = state.echartData[type];
+         console.log(state.impData);
+      }
 }
 export default new Vuex.Store({
     state,mutations
