@@ -5,5 +5,6 @@
         <router-link  to="/Translate">在线翻译</router-link> 
         <router-link  :to="{name:'map'}">地图</router-link>
         <router-link  to="/echarts">echarts</router-link>
+        <router-link :to="{name:'element'}">饿了么</router-link>
     </div> 
 </template>

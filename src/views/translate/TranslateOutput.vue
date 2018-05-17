@@ -1,5 +1,6 @@
 <template>
   <div>{{translatedText}}</div>
+  
 </template>
 <script>
     export default{

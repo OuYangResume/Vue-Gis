@@ -27,12 +27,12 @@ export const router1=[
     },
     {
       path:"/Translate",
-      component: ()=>import('@/components/translate'),
+      component: ()=>import('@/views/translate/translate'),
     },
     {
       path:'/map',
       name:'map',
-      component:() =>import('@/components/map/mapContainer'),
+      component:() =>import('@/views/map'),
     },
     {
       path:'/echarts',
@@ -69,7 +69,7 @@ const router2=[
     children: [
       {
         path: 'Translate',
-        component: () => import('@/components/translate'),
+        component: () => import('@/views/translate/translate'),
       }
     ]
   },
@@ -80,7 +80,7 @@ const router2=[
       {
         path: 'map',
         name:'map',
-        component: () => import('@/components/map/mapContainer'),
+        component: () => import('@/views/map'),
       }
     ]
   },
@@ -91,6 +91,17 @@ const router2=[
       {
         path: 'echarts',
         component: () => import('@/components/echarts/echartsFull'),
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    children: [
+      {
+        path: 'element',
+        name:'element',
+        component: () => import('@/views/element'),
       }
     ]
   },

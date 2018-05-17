@@ -1,7 +1,7 @@
 <template>
   <div>
-     <h1 class="col-md-12">{{msg}}</h1> 
-     <h5 class="text-muted col-md-12 ">简单 / 易用 / 便捷</h5>
+     <h1>{{msg}}</h1> 
+     <h5>简单 / 易用 / 便捷</h5>
  <translateForm  v-on:formSubmit1="translateText"></translateForm>
  <TranslateOutput v-text="translatedText"></TranslateOutput>
   </div>
@@ -9,8 +9,8 @@
 
 
 <script>
-    import TranslateForm from '../components/translateForm' 
-    import TranslateOutput from '../components/TranslateOutput'
+    import TranslateForm from './translateForm' 
+    import TranslateOutput from './TranslateOutput'
     export default{
         name:"translate",
         components:{

@@ -1,11 +1,13 @@
 <template>
 <div>
-  <div id="mapid">
-        
+    <div id="mapid">    
     </div>
-    <button class="btn" v-on:click="addMapMarker()" v-bind:class="MapMarker?'':'btn-success'">添加Awesome图标</button>
-    <button class="btn" v-on:click="addClusterLayer()" v-bind:class="markercluster?'':'btn-success'">添加聚类图层</button>
-    <button class="btn" v-on:click="heatMapLayer()" v-bind:class="heatMap?'':'btn-success'" >添加热力图层</button>
+    <el-row>
+        <el-button plain>使用element-ui</el-button>
+        <el-button type="primary" plain v-on:click="addMapMarker()">添加Awesome图标</el-button>
+        <el-button type="success" round v-on:click="addClusterLayer()">添加聚类图层</el-button>
+        <el-button type="warning"  v-on:click="heatMapLayer()">添加热力图层</el-button>
+    </el-row>
     <!-- <button  v-on:click="deleteLayer()">清除</button> -->
 </div>
     
