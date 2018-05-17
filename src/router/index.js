@@ -1,41 +1,102 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import User from '@/components/user'
 
 import Resource from 'vue-resource'
 import echarts from 'echarts'
-
-import App from '@/App'
-import Test from '@/components/test'
-import Translate from '@/components/translate'
-import Map from '@/components/map/mapContainer'
-import EchartsFull from '@/components/echarts/echartsFull'
-
 
 Vue.use(Resource)
 
 Vue.prototype.$echarts = echarts
 Vue.use(VueRouter)
 
-export default new  VueRouter({
-    routes:[
-        {
-            path: "/", component: User
-          },
-          {
-            path: "/test", component: Test
-          },
-          {
-            path:"/Translate",
-            component: Translate,
-          },
-          {
-            path:'/map',
-            component:Map
-          },
-          {
-            path:'/echarts',
-            component:EchartsFull,
-          }
+/* Layout */
+import Layout from '../views/layout/Layout'
+
+export const router1=[
+  {
+      path: '/', 
+      component: () => import('@/components/user'),
+      //別名。路徑和"/"效果一樣
+      alias: '/user',
+      //重定向。訪問'/'和'/user'到地圖
+      //redirect: '/map'
+    },
+    {
+      path: "/test", 
+      component: () =>import('@/components/test')
+    },
+    {
+      path:"/Translate",
+      component: ()=>import('@/components/translate'),
+    },
+    {
+      path:'/map',
+      name:'map',
+      component:() =>import('@/components/map/mapContainer'),
+    },
+    {
+      path:'/echarts',
+      component:()=>import('@/components/echarts/echartsFull'),
+    }
+]
+
+const router2=[
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/user',
+    name: 'User',
+    hidden: true,
+    children: [{
+      path: 'user',
+      component: ()=>import("@/components/user")
+    }]
+  },
+  {
+    path: '/',
+    component: Layout,
+    name: 'Test',
+    children: [
+      {
+        path: 'test',
+        component: () => import('@/components/test'),
+      }
     ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    children: [
+      {
+        path: 'Translate',
+        component: () => import('@/components/translate'),
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    children: [
+      {
+        path: 'map',
+        name:'map',
+        component: () => import('@/components/map/mapContainer'),
+      }
+    ]
+  },
+  {
+    path: '/',
+    component: Layout,
+    children: [
+      {
+        path: 'echarts',
+        component: () => import('@/components/echarts/echartsFull'),
+      }
+    ]
+  },
+]
+
+export default new  VueRouter({
+    mode: 'history',
+    routes:router2
 })
