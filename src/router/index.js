@@ -42,13 +42,14 @@ export const router1=[
 
 const router2=[
   {
-    path: '/',
+    path: '',
     component: Layout,
     redirect: '/user',
     name: 'User',
-    hidden: true,
+    // hidden: true, 控制菜单的显示隐藏
     children: [{
       path: 'user',
+      name:'User',
       component: ()=>import("@/components/user"),
       meta: { title: 'User', icon: 'example' },
     }]
@@ -60,6 +61,7 @@ const router2=[
     children: [
       {
         path: 'test',
+        name:'Test',
         component: () => import('@/components/test'),
         meta: { title: 'vue常用功能', icon: 'example' },
       }
@@ -68,9 +70,11 @@ const router2=[
   {
     path: '/Translate',
     component: Layout,
+    name:'Translate',
     children: [
       {
         path: 'Translate',
+        name:'Translate',
         component: () => import('@/views/translate/translate'),
         meta: { title: '在线翻译', icon: 'example' },
       }
@@ -91,12 +95,13 @@ const router2=[
   {
     path: '/echarts',
     component: Layout,
+    name:'echarts',
     meta: { title: 'echarts', icon: 'example' },
     children: [
       {
         path: 'echarts',
         name:'Echart',
-        component: () => import('@/components/echarts/echartsFull'),
+        component: () => import('@/views/echarts/echartsFull'),
         meta: { title: 'Echart', icon: 'example' },
       },
       {
@@ -110,6 +115,7 @@ const router2=[
   {
     path: '/element',
     component: Layout,
+    name:'element',
     children: [
       {
         path: 'element',

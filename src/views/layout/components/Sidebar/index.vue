@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <el-menu
-      mode="vertical"
+<div>
+  <el-menu
+      mode="vertical" 
       :show-timeout="200"
       background-color="#304156"
       text-color="#bfcbd9"
@@ -51,7 +51,11 @@
     </template>
        </div>
     </el-menu>
-  </div>   
+</div>
+      
+   
+
+    
 </template>
 
 <script>
