@@ -15,6 +15,7 @@
 
 <script>
 import mapProvider from "../../../static/script/leaflet.MapProviders.js";
+
 import markerClusterGroup from "leaflet.markercluster";
 import Easybutton from "leaflet-easybutton";
 

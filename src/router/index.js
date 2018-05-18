@@ -49,59 +49,73 @@ const router2=[
     hidden: true,
     children: [{
       path: 'user',
-      component: ()=>import("@/components/user")
+      component: ()=>import("@/components/user"),
+      meta: { title: 'User', icon: 'example' },
     }]
   },
   {
-    path: '/',
+    path: '/test',
     component: Layout,
     name: 'Test',
     children: [
       {
         path: 'test',
         component: () => import('@/components/test'),
+        meta: { title: 'vue常用功能', icon: 'example' },
       }
     ]
   },
   {
-    path: '/',
+    path: '/Translate',
     component: Layout,
     children: [
       {
         path: 'Translate',
         component: () => import('@/views/translate/translate'),
+        meta: { title: '在线翻译', icon: 'example' },
       }
     ]
   },
   {
-    path: '/',
+    path: '/map',
     component: Layout,
     children: [
       {
         path: 'map',
         name:'map',
         component: () => import('@/views/map'),
+        meta: { title: 'Map地图', icon: 'example' },
       }
     ]
   },
   {
-    path: '/',
+    path: '/echarts',
     component: Layout,
+    meta: { title: 'echarts', icon: 'example' },
     children: [
       {
         path: 'echarts',
+        name:'Echart',
         component: () => import('@/components/echarts/echartsFull'),
+        meta: { title: 'Echart', icon: 'example' },
+      },
+      {
+        path: 'element',
+        name:'element',
+        component: () => import('@/views/element'),
+        meta: { title: '饿了么', icon: 'example' },
       }
     ]
   },
   {
-    path: '/',
+    path: '/element',
     component: Layout,
     children: [
       {
         path: 'element',
         name:'element',
         component: () => import('@/views/element'),
+        meta: { title: '饿了么', icon: 'example' },
       }
     ]
   },
