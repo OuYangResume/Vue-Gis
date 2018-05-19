@@ -37,12 +37,14 @@
   methods: {
     getBreadcrumb() {
       let matched = this.$route.matched.filter(item => item.name)
-    //   console.log(matched);
+       
       const first = matched[0]
+      // console.log(first);
       if (first && first.name !== 'dashboard') {
-        matched = [{ path: '/user', meta: { title: 'User' }}].concat(matched)
+        matched = [{ path: '/', meta: { title: '首页' }}].concat(matched)
       }
       this.levelList = matched
+      console.log(this.levelList);
     }
   }
     }
@@ -53,12 +55,18 @@
         height: 50px;
         line-height: 50px;
         border-radius: 0px !important;
-            border-right: none;
-    border-bottom: solid 1px #e6e6e6;
+        border-right: none;
+        border-bottom: solid 1px #e6e6e6;
         list-style: none;
-    position: relative;
-    margin: 0;
-    padding-left: 0;
+        position: relative;
+        margin: 0;
+        padding-left: 0;
+    }
+    .app-breadcrumb{
+      display: inline-block;
+      font-size: 14px;
+      line-height: 50px;
+      margin-left: 10px;
     }
 </style>
 

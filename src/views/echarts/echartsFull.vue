@@ -1,5 +1,5 @@
 <template>
-  <div id="echartsFull" class="row">
+  <div id="echartsFull">
       <!-- <div  class="col-md-2">
           <span @click="select('day')" class="block" >日</span>
           <span @click="select('week')" class="block" >周</span>

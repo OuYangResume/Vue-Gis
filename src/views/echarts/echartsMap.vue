@@ -1,5 +1,5 @@
 <template>
-  <div id="echartsMap" class="col-md-10" style="height:800px">
+  <div id="echartsMap"  style="height:800px">
    
   </div>
 </template>

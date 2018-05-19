@@ -36,7 +36,7 @@ export const router1=[
     },
     {
       path:'/echarts',
-      component:()=>import('@/components/echarts/echartsFull'),
+      component:()=>import('@/views/echarts/echartsFull'),
     }
 ]
 
@@ -102,13 +102,13 @@ const router2=[
         path: 'echarts',
         name:'Echart',
         component: () => import('@/views/echarts/echartsFull'),
-        meta: { title: 'Echart', icon: 'example' },
+        meta: { title: '柱状图', icon: 'example' },
       },
       {
         path: 'element',
         name:'element',
-        component: () => import('@/views/element'),
-        meta: { title: '饿了么', icon: 'example' },
+        component: () => import('@/views/echarts/mixChart'),
+        meta: { title: '混合图', icon: 'example' },
       }
     ]
   },
