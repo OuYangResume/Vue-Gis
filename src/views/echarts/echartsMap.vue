@@ -1,5 +1,5 @@
 <template>
-  <div id="echartsMap"  style="height:800px">
+  <div id="echartsMap">
    
   </div>
 </template>
@@ -52,3 +52,10 @@ export default {
   }
 };
 </script>
+
+<style>
+  #echartsMap{
+    height: 80vh;
+  }
+</style>
+

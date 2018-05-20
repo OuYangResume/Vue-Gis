@@ -78,7 +78,7 @@
            console.log(this.routes); 
         },
         methods:{
-       
+      
         }
     }
 </script>

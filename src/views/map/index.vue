@@ -210,7 +210,7 @@ export default {
 <style scoped>
 #mapid {
   width: 100%;
-  height: 750px;
+  height: 80vh;
 }
 /* .classa{
   color: red;

@@ -15,7 +15,7 @@ import Layout from '../views/layout/Layout'
 export const router1=[
   {
       path: '/', 
-      component: () => import('@/components/user'),
+      component: () => import('@/views/test/user'),
       //別名。路徑和"/"效果一樣
       alias: '/user',
       //重定向。訪問'/'和'/user'到地圖
@@ -23,7 +23,7 @@ export const router1=[
     },
     {
       path: "/test", 
-      component: () =>import('@/components/test')
+      component: () =>import('@/views/test/test')
     },
     {
       path:"/Translate",
@@ -42,28 +42,36 @@ export const router1=[
 
 const router2=[
   {
-    path: '',
+     path:'',
     component: Layout,
-    redirect: '/user',
-    name: 'User',
-    // hidden: true, 控制菜单的显示隐藏
-    children: [{
-      path: 'user',
-      name:'User',
-      component: ()=>import("@/components/user"),
-      meta: { title: 'User', icon: 'example' },
+    redirect:'/dashboard',
+    // 控制菜单的显示隐藏
+    hidden:true,
+    name:'首页',
+    children:[{
+      path:'dashboard',
+      component:()=>import("@/views/dashboard"),
     }]
   },
+
   {
     path: '/test',
     component: Layout,
     name: 'Test',
+    redirect:'/test/test',
+    meta: { title: 'vue常用功能', icon: 'example' },
     children: [
       {
         path: 'test',
         name:'Test',
-        component: () => import('@/components/test'),
-        meta: { title: 'vue常用功能', icon: 'example' },
+        component: () => import('@/views/test/test'),
+        meta: { title: 'test', icon: 'example' },
+      },
+      {
+        path: 'user',
+        name:'User',
+        component: ()=>import("@/views/test/user"),
+        meta: { title: 'User', icon: 'example' },
       }
     ]
   },
