@@ -8,19 +8,16 @@
         <el-row :gutter="32">
             <el-col :xs="24" :sm="24" :lg="8">
             <div class="chart-wrapper">
-                    a
                 <raddar-chart></raddar-chart>
             </div>
             </el-col>
             <el-col :xs="24" :sm="24" :lg="8">
                 <div class="chart-wrapper">
-                    b
                     <pie-chart></pie-chart>
                 </div>
             </el-col>
             <el-col :xs="24" :sm="24" :lg="8">
                 <div class="chart-wrapper">
-                    c
                 <bar-chart></bar-chart>
                  </div>
             </el-col>
@@ -28,7 +25,9 @@
     </div>
 </template>
  <script>
-
+    import raddarChart from '@/components/Charts/RaddarChart'
+    import pieChart from '@/components/Charts/PieChart'
+    import barChart from '@/components/Charts/BarChart'
 
 const lineChartData = {
   newVisitis: {
@@ -49,16 +48,20 @@ const lineChartData = {
   }
 }
     export default{
+
+        components:{
+            raddarChart,pieChart,barChart
+        },
         data() {
-    return {
-      lineChartData: lineChartData.newVisitis
-    }
-  },
-  methods: {
-    handleSetLineChartData(type) {
-      this.lineChartData = lineChartData[type]
-    }
-  }
+         return {
+            lineChartData: lineChartData.newVisitis
+             }
+        },
+        methods: {
+            handleSetLineChartData(type) {
+            this.lineChartData = lineChartData[type]
+        }
+     }
     }
 </script>
 
