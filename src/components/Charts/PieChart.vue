@@ -2,7 +2,8 @@
      <div :class="className" id="pie" :style="{height:height,width:width}"></div>
 </template>
 <script>
-import echarts from "echarts";
+import echarts from "echarts"
+require('echarts/theme/macarons') // echarts theme
 export default {
   props: {
     className: {
@@ -25,7 +26,7 @@ export default {
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(document.getElementById("pie"));
+      this.chart = echarts.init(document.getElementById("pie"),'macarons');
       this.chart.setOption({
         title: {
           text: "英雄属性分布图",

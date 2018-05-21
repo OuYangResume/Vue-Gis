@@ -1,7 +1,10 @@
 <template>
     <div class="dashboard-container">
+        <!-- @handleSetLineChartData接受子组件的方法 -->
+        <panel-group @handleSetLineChartData="handleSetLineChartData"></panel-group>
+
         <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-            line
+            <!-- :chart-data向子组件传递值 -->
             <line-chart :chart-data="lineChartData"></line-chart>
         </el-row>
 
@@ -25,6 +28,8 @@
     </div>
 </template>
  <script>
+    import panelGroup from '@/components/Charts/PanelGroup'
+    import lineChart from '@/components/Charts/LineChart'
     import raddarChart from '@/components/Charts/RaddarChart'
     import pieChart from '@/components/Charts/PieChart'
     import barChart from '@/components/Charts/BarChart'
@@ -50,7 +55,7 @@ const lineChartData = {
     export default{
 
         components:{
-            raddarChart,pieChart,barChart
+            panelGroup,lineChart,raddarChart,pieChart,barChart
         },
         data() {
          return {
@@ -59,7 +64,12 @@ const lineChartData = {
         },
         methods: {
             handleSetLineChartData(type) {
-            this.lineChartData = lineChartData[type]
+            this.lineChartData = lineChartData[type];
+            console.log(type);
+        },
+        mounted () {
+            //测试子元素传递过来的type
+            this.handleSetLineChartData();
         }
      }
     }

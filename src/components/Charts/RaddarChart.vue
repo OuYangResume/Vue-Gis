@@ -4,6 +4,7 @@
 
 <script>
 import echarts from "echarts"
+require('echarts/theme/macarons') // echarts theme
 export default {
   props: {
     className: {
@@ -26,7 +27,7 @@ export default {
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(document.getElementById("raddar"));
+      this.chart = echarts.init(document.getElementById("raddar"),'macarons');
       this.chart.setOption({
         tooltip: {
           trigger: 'axis',

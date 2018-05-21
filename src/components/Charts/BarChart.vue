@@ -2,7 +2,9 @@
     <div :class="className" id="bar" :style="{height:height,width:width}"></div>
 </template>
 <script>
-import echarts from "echarts";
+// import echarts from "echarts";
+// require('echarts/theme/macarons') // echarts theme
+
 export default {
   props: {
     className: {
@@ -25,7 +27,8 @@ export default {
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(document.getElementById("bar"));
+        let echarts=require('echarts');
+      this.chart = echarts.init(document.getElementById("bar"),'macarons');
       this.chart.setOption({
     title: {
         text: '输出与承受占比图',
