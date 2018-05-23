@@ -10,6 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "echarts": "^4.0.4",
     "element-ui": "^2.3.8",
     "heatmap.js": "^2.0.5",
