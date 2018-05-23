@@ -35,6 +35,7 @@ export default {
   mounted() {
     this.initChart();
   },
+//   实例销毁之前调用。在这一步，实例仍然完全可用
   beforeDestroy() {
     // 销毁实例
     this.chart.dispose();
@@ -49,10 +50,10 @@ export default {
     }
   },
   methods: {
-    setOptions({ expectedData, actualData } = {}) {
-      this.chart.setOption({
+    setOptions({ KDA, CTL } = {}) {
+      let option={
         xAxis: {
-          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          data: ["德玛", "亚索", "瑞文", "盲僧", "卡萨", "妖姬", "提莫"],
           boundaryGap: false,
           axisTick: {
             show: false
@@ -72,17 +73,31 @@ export default {
           },
           padding: [5, 10]
         },
-        yAxis: {
-          axisTick: {
-            show: false
-          }
+        yAxis: [
+        {
+            type: 'value',
+            name: 'KDA',
+            min: 3,
+            max: 15,
+            interval: 3,
         },
+        {
+            type: 'value',
+            name: '参团率',
+            min: 20,
+            max: 100,
+            interval: 20,
+            axisLabel: {
+                formatter: '{value} %'
+            }
+        }
+    ],
         legend: {
-          data: ["expected", "actual"]
+          data: ["KDA", "参团率"]
         },
         series: [
           {
-            name: "expected",
+            name: "KDA",
             itemStyle: {
               normal: {
                 color: "#FF005A",
@@ -94,14 +109,15 @@ export default {
             },
             smooth: true,
             type: "line",
-            data: expectedData,
+            data: [9, 12, 8.5, 12, 10, 7.5, 10],
             animationDuration: 2800,
             animationEasing: "cubicInOut"
           },
           {
-            name: "actual",
+            name: "参团率",
             smooth: true,
             type: "line",
+            yAxisIndex:1,
             itemStyle: {
               normal: {
                 color: "#3888fa",
@@ -114,7 +130,92 @@ export default {
                 }
               }
             },
-            data: actualData,
+            data: [80, 82, 91, 50, 45, 70, 80],
+            animationDuration: 2800,
+            animationEasing: "quadraticOut"
+          }
+        ]
+      };
+      this.chart.setOption({
+        xAxis: {
+          data: ["德玛", "亚索", "瑞文", "盲僧", "卡萨", "妖姬", "提莫"],
+          boundaryGap: false,
+          axisTick: {
+            show: false
+          }
+        },
+        grid: {
+          left: 10,
+          right: 10,
+          bottom: 20,
+          top: 30,
+          containLabel: true
+        },
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "cross"
+          },
+          padding: [5, 10]
+        },
+        yAxis: [
+        {
+            type: 'value',
+            name: 'KDA',
+            min: 3,
+            max: 15,
+            interval: 3,
+        },
+        {
+            type: 'value',
+            name: '参团率',
+            min: 20,
+            max: 100,
+            interval: 20,
+            axisLabel: {
+                formatter: '{value} %'
+            }
+        }
+    ],
+        legend: {
+          data: ["KDA", "参团率"]
+        },
+        series: [
+          {
+            name: "KDA",
+            itemStyle: {
+              normal: {
+                color: "#FF005A",
+                lineStyle: {
+                  color: "#FF005A",
+                  width: 2
+                }
+              }
+            },
+            smooth: true,
+            type: "line",
+            data: KDA,
+            animationDuration: 2800,
+            animationEasing: "cubicInOut"
+          },
+          {
+            name: "参团率",
+            smooth: true,
+            type: "line",
+            yAxisIndex:1,
+            itemStyle: {
+              normal: {
+                color: "#3888fa",
+                lineStyle: {
+                  color: "#3888fa",
+                  width: 2
+                },
+                areaStyle: {
+                  color: "#f3f8ff"
+                }
+              }
+            },
+            data: CTL,
             animationDuration: 2800,
             animationEasing: "quadraticOut"
           }

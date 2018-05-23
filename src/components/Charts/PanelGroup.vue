@@ -1,16 +1,16 @@
 <template>
     <el-row class="panel-group" :gutter="40">
         <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-            <div class="card-panel"  @click="handleSetLineChartData('newVisitis')">New Visits1</div>
+            <div class="card-panel"  @click="handleSetLineChartData('newVisitis')">第一局</div>
         </el-col>
         <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-            <div class="card-panel" @click="handleSetLineChartData('messages')">messages</div>
+            <div class="card-panel" @click="handleSetLineChartData('messages')">第二局</div>
             </el-col>
         <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-            <div class="card-panel"  @click="handleSetLineChartData('purchases')">purchases</div>
+            <div class="card-panel"  @click="handleSetLineChartData('purchases')">第三局</div>
             </el-col>
         <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-            <div class="card-panel"  @click="handleSetLineChartData('shoppings')">shoppings</div>
+            <div class="card-panel"  @click="handleSetLineChartData('shoppings')">第四局</div>
             </el-col>   
     </el-row>
 </template>
@@ -32,7 +32,7 @@ export default {
 .card-panel {
   height: 108px;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 16px;
   position: relative;
   overflow: hidden;
   color: #666;

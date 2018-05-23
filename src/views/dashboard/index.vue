@@ -5,7 +5,7 @@
 
         <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
             <!-- :chart-data向子组件传递值 -->
-            <line-chart :chart-data="lineChartData"></line-chart>
+            <line-chart v-bind:chart-data="lineChartData"></line-chart>
         </el-row>
 
         <el-row :gutter="32">
@@ -36,20 +36,20 @@
 
 const lineChartData = {
   newVisitis: {
-    expectedData: [100, 120, 161, 134, 105, 160, 165],
-    actualData: [120, 82, 91, 154, 162, 140, 145]
+    KDA: [9, 12, 8.5, 12, 10, 7.5, 10],
+    CTL: [80, 82, 91, 50, 45, 70, 80]
   },
   messages: {
-    expectedData: [200, 192, 120, 144, 160, 130, 140],
-    actualData: [180, 160, 151, 106, 145, 150, 130]
+    KDA: [10, 13, 12, 12, 9, 9.5, 9],
+    CTL: [45, 68, 60, 90, 60, 60, 90]
   },
   purchases: {
-    expectedData: [80, 100, 121, 104, 105, 90, 100],
-    actualData: [120, 90, 100, 138, 142, 130, 130]
+    KDA: [12, 12, 8.5, 12, 9, 8.5, 10],
+    CTL: [63, 82, 80, 60, 85, 60, 63]
   },
   shoppings: {
-    expectedData: [130, 140, 141, 142, 145, 150, 160],
-    actualData: [120, 82, 91, 154, 162, 140, 130]
+    KDA: [6, 8.5, 8.5, 10, 10, 12, 8],
+    CTL: [70, 82, 85, 60, 75, 53, 75]
   }
 }
     export default{
