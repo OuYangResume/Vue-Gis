@@ -10,23 +10,7 @@ Vue.use(VueRouter)
 import Layout from '../views/layout/Layout'
 
 export const router1=[
-    {
-      path: "/test", 
-      component: () =>import('@/views/test/test')
-    },
-    {
-      path:"/Translate",
-      component: ()=>import('@/views/translate/translate'),
-    },
-    {
-      path:'/map',
-      name:'map',
-      component:() =>import('@/views/map'),
-    },
-    {
-      path:'/echarts',
-      component:()=>import('@/views/echarts/echartsFull'),
-    }
+   
 ]
 
 const router2=[
@@ -96,17 +80,17 @@ const router2=[
     meta: { title: 'echarts', icon: 'example' },
     children: [
       {
-        path: 'echarts',
-        name:'Echart',
-        component: () => import('@/views/echarts/echartsFull'),
-        meta: { title: '柱状图', icon: 'example' },
+        path: 'element',
+        name:'mixChart',
+        component: () => import('@/views/echarts/mixChart/index'),
+        meta: { title: '混合图', icon: 'example' },
       },
       {
-        path: 'element',
-        name:'element',
-        component: () => import('@/views/echarts/mixChart'),
-        meta: { title: '混合图', icon: 'example' },
-      }
+        path: 'barChart',
+        name:'barChart',
+        component: () => import('@/views/echarts/barChart'),
+        meta: { title: '柱状图', icon: 'example' },
+      },
     ]
   },
   {
