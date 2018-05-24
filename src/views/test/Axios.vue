@@ -68,7 +68,7 @@ export default {
         //当这两个请求都完成的时候会触发这个函数，两个参数分别代表返回的结果
         // console.log(post,user);
         this.users = user.data;
-        console.log(this.users);
+        // console.log(this.users);
       })
     );
   },

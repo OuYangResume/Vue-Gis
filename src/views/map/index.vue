@@ -14,6 +14,8 @@
 </template>
 
 <script>
+
+import axios from "axios";
 import mapProvider from "../../../static/script/leaflet.MapProviders.js";
 
 import markerClusterGroup from "leaflet.markercluster";
@@ -199,9 +201,9 @@ export default {
   },
   created() {
     //获取数据
-    this.$http.get("../../../static/data/county.json").then(response => {
-      // console.log(response);
-      return (this.dataTest = response.body[0].items);
+    axios.get("../../../static/data/county.json").then(response => {
+      //  console.log(response.data);
+       return (this.dataTest = response.data[0].items);
     });
   }
 };
