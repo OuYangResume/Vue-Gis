@@ -64,12 +64,20 @@ const router2=[
   {
     path: '/map',
     component: Layout,
+    name:'Map',
+    meta: { title: 'Map地图', icon: 'example' },
     children: [
       {
-        path: 'map',
+        path: 'leaflet',
+        name:'leaflet',
+        component: () => import('@/views/map/leaflet'),
+        meta: { title: 'leaflet', icon: 'example' },
+      },
+      {
+        path: 'mapbox',
         name:'map',
-        component: () => import('@/views/map'),
-        meta: { title: 'Map地图', icon: 'example' },
+        component: () => import('@/views/map/mapbox'),
+        meta: { title: 'mapbox', icon: 'example' },
       }
     ]
   },

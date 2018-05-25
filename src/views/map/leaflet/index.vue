@@ -16,7 +16,7 @@
 <script>
 
 import axios from "axios";
-import mapProvider from "../../../static/script/leaflet.MapProviders.js";
+import mapProvider from "../../../../static/script/leaflet.MapProviders.js";
 
 import markerClusterGroup from "leaflet.markercluster";
 import Easybutton from "leaflet-easybutton";
