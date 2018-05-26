@@ -74,8 +74,14 @@ const router2=[
         meta: { title: 'leaflet', icon: 'example' },
       },
       {
-        path: 'mapbox',
+        path: 'draw',
         name:'map',
+        component: () => import('@/views/map/leaflet/draw'),
+        meta: { title: 'draw', icon: 'example' },
+      },
+      {
+        path: 'mapbox',
+        name:'mapbox',
         component: () => import('@/views/map/mapbox'),
         meta: { title: 'mapbox', icon: 'example' },
       }

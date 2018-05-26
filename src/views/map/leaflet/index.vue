@@ -21,6 +21,7 @@ import mapProvider from "../../../../static/script/leaflet.MapProviders.js";
 import markerClusterGroup from "leaflet.markercluster";
 import Easybutton from "leaflet-easybutton";
 
+
 export default {
   name: "mapContainer",
   data() {
@@ -210,6 +211,7 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://cdn.bootcss.com/leaflet.markercluster/1.1.0/MarkerCluster.Default.css");
 #mapid {
   width: 100%;
   height: 80vh;

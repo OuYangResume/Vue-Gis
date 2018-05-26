@@ -15,7 +15,6 @@
     <label for='dark'>dark</label>
     <input id='satellite' type='radio' name='rtoggle' value='satellite'>
     <label for='satellite'>satellite</label>
-
     </div>
 </div>
 </template>
