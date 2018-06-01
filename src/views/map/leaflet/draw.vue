@@ -1,5 +1,8 @@
 <template>
-    <div id="map"></div>
+<div>
+<div id="map"></div>
+</div>
+    
 </template>
 
 <script>
@@ -10,7 +13,6 @@ export default {
   data() {
     return {
       map: null,
-      editableLayers: null
     };
   },
   methods: {
@@ -110,7 +112,8 @@ export default {
 
         editableLayers.addLayer(layer);
       });
-    }
+    },
+   
   },
   mounted() {
     this.initMap();

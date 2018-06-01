@@ -16,6 +16,13 @@
     <input id='satellite' type='radio' name='rtoggle' value='satellite'>
     <label for='satellite'>satellite</label>
     </div>
+<div>
+    <el-row>
+        <el-button plain>使用element-ui</el-button>
+        <el-button type="primary" plain v-on:click="measureLine()">测量距离</el-button>
+    </el-row>
+</div>
+    
 </div>
 </template>
 
@@ -34,7 +41,8 @@ export default {
   },
   data() {
     return {
-        layerStyle:['basic','streets','bright','light','dark','satellite']
+        layerStyle:['basic','streets','bright','light','dark','satellite'],
+
     };
   },
   methods: {
@@ -57,7 +65,8 @@ export default {
           map.setStyle("mapbox://styles/mapbox/" + layerId + "-v9");
         };
       }
-    }
+    },
+     measureLine(){}
   },
   mounted() {
     this.initMap();
@@ -68,7 +77,6 @@ export default {
 <style>
 @import url("https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.css");
 #menu {
-  position: absolute;
   background: #fff;
   padding: 10px;
   font-family: "Open Sans", sans-serif;
