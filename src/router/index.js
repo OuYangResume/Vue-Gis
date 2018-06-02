@@ -110,42 +110,6 @@ const router2=[
     ]
   },
   //三级路由。还是有问题
-  // {
-  //   path: '/element',
-  //   component: Layout,
-  //   name:'element',
-  //   redirect:'/element/elementIndex',
-  //   meta: { title: 'element', icon: 'example' },
-  //   children: [
-  //     {
-  //       path: '/element/table',
-  //       name:'table',
-  //       redirect:'/element/table/basictable',
-  //       component: () => import('@/views/element/table/index'),
-  //       meta: { title: 'table', icon: 'example' },
-  //       children:[
-  //         {
-  //           path: 'basictable',
-  //           name:'basictable',
-  //           component: () => import('@/views/element/table/basictable'),
-  //           meta: { title: '基础表格'}
-  //         },
-  //         {
-  //           path: 'treetable',
-  //           name:'treetable',
-  //           component: () => import('@/views/element/table/treetable'),
-  //           meta: { title: '树表格'}
-  //         },
-  //       ]
-  //     },
-  //     {
-  //       path: 'elementIndex',
-  //       name:'elementIndex',
-  //       component: () => import('@/views/element'),
-  //       meta: { title: '饿了么', icon: 'example' },
-  //     }
-  //   ]
-  // },
   {
     path: '/element',
     component: Layout,
@@ -154,25 +118,61 @@ const router2=[
     meta: { title: 'element', icon: 'example' },
     children: [
       {
+        path: '/element/table',
+        name:'table',
+        redirect:'/element/table/basictable',
+        component: () => import('@/views/element/table/index'),
+        meta: { title: 'table', icon: 'example' },
+        children:[
+          {
+            path: 'basictable',
+            name:'basictable',
+            component: () => import('@/views/element/table/basictable'),
+            meta: { title: '基础表格'}
+          },
+          {
+            path: 'treetable',
+            name:'treetable',
+            component: () => import('@/views/element/table/treetable'),
+            meta: { title: '树表格'}
+          },
+        ]
+      },
+      {
         path: 'elementIndex',
         name:'elementIndex',
         component: () => import('@/views/element'),
         meta: { title: '饿了么', icon: 'example' },
-      },
-      {
-        path: 'basictable',
-        name:'basictable',
-        component: () => import('@/views/element/table/basictable'),
-        meta: { title: '基础表格'}
-      },
-      {
-        path: 'treetable',
-        name:'treetable',
-        component: () => import('@/views/element/table/treetable'),
-        meta: { title: '树表格'}
-      },
+      }
     ]
   },
+  // {
+  //   path: '/element',
+  //   component: Layout,
+  //   name:'element',
+  //   redirect:'/element/elementIndex',
+  //   meta: { title: 'element', icon: 'example' },
+  //   children: [
+  //     {
+  //       path: 'elementIndex',
+  //       name:'elementIndex',
+  //       component: () => import('@/views/element'),
+  //       meta: { title: '饿了么', icon: 'example' },
+  //     },
+  //     {
+  //       path: 'basictable',
+  //       name:'basictable',
+  //       component: () => import('@/views/element/table/basictable'),
+  //       meta: { title: '基础表格'}
+  //     },
+  //     {
+  //       path: 'treetable',
+  //       name:'treetable',
+  //       component: () => import('@/views/element/table/treetable'),
+  //       meta: { title: '树表格'}
+  //     },
+  //   ]
+  // },
 ]
 
 export default new  VueRouter({
