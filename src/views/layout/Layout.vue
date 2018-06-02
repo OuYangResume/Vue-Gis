@@ -3,7 +3,10 @@
         <sidebar class="sidebar-container"></sidebar>
         <div class="main-container">
             <navbar></navbar>
-            <router-view></router-view>
+            <div>
+                <router-view></router-view>
+            </div>
+            
         </div>
     </div>
      
@@ -42,4 +45,5 @@ export default {
     overflow: hidden;
         background-color: #304156;
   }
+  
 </style>
