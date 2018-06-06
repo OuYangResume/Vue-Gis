@@ -14,6 +14,7 @@
     </el-tabs>
 </template>
 <script>
+import axios from "axios"
 export default {
   data() {
     return {
@@ -25,12 +26,23 @@ export default {
         { label: "Eurozone", key: "EU" }
       ],
       activeName: "CN",
+      users:[],
     };
   },
   methods: {
     handleClick(tab, event) {
       console.log(tab, event);
     }
+  },
+  created(){
+    axios
+      .get("http://localhost:8888/getlist")
+      .then(response => {
+        this.users = response.data;
+      })
+      .catch(error => {
+        console.log("axios==" + error);
+      });
   }
 };
 </script>
