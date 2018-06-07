@@ -109,7 +109,7 @@ const router2=[
       },
     ]
   },
-  //三级路由。还是有问题
+  //三级路由。
   {
     path: '/element',
     component: Layout,
@@ -135,7 +135,12 @@ const router2=[
             name:'treetable',
             component: () => import('@/views/element/table/treetable'),
             meta: { title: '树表格'}
-          },
+          },{
+            path:'paginationtable',
+            name:'分页',
+            component:() =>import('@/views/element/table/paginationtable'),
+            meta:{title:'分页表格'}
+          }
         ]
       },
       {

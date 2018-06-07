@@ -34,15 +34,15 @@ export default {
       console.log(tab, event);
     }
   },
-  created(){
-    axios
-      .get("http://localhost:8888/getlist")
-      .then(response => {
-        this.users = response.data;
-      })
-      .catch(error => {
-        console.log("axios==" + error);
-      });
-  }
+  // created(){
+  //   axios
+  //     .get("http://localhost:8888/getlist")
+  //     .then(response => {
+  //       this.users = response.data;
+  //     })
+  //     .catch(error => {
+  //       console.log("axios==" + error);
+  //     });
+  // }
 };
 </script>
