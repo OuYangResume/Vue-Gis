@@ -2,6 +2,9 @@
     <div>
         分页{{name}}
 
+    <div >
+      <el-button  style="margin-left: 10px;" @click="handleCreate" type="primary" icon="el-icon-edit">add</el-button>
+    </div>
 
     <el-table :data="newusers"   element-loading-text="给我一点时间" border fit highlight-current-row
       style="width: 100%">
@@ -25,17 +28,12 @@
           <span>{{scope.row.age}}</span>
         </template>
       </el-table-column>
-      <!-- <el-table-column align="center" :label="$t('table.actions')" width="230" class-name="small-padding fixed-width">
+      <el-table-column align="center" label="操作" width="230" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">{{$t('table.edit')}}</el-button>
-          <el-button v-if="scope.row.status!='published'" size="mini" type="success" @click="handleModifyStatus(scope.row,'published')">{{$t('table.publish')}}
-          </el-button>
-          <el-button v-if="scope.row.status!='draft'" size="mini" @click="handleModifyStatus(scope.row,'draft')">{{$t('table.draft')}}
-          </el-button>
-          <el-button v-if="scope.row.status!='deleted'" size="mini" type="danger" @click="handleModifyStatus(scope.row,'deleted')">{{$t('table.delete')}}
-          </el-button>
+          <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
+          <el-button  size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
         </template>
-      </el-table-column> -->
+      </el-table-column>
     </el-table>
 
     <div class="pagination-container">
@@ -43,6 +41,31 @@
        :current-page="listQuery.page" :page-sizes="[3,5,8, 10]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
+
+
+    <el-dialog
+  :title="textMap[dialogStatus]"
+  :visible.sync="centerDialogVisible"
+  width="30%"
+  center>
+    <el-form ref="dataForm"  :model="temp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
+        <el-form-item label="名称" >
+          <el-input v-model="temp.userName"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" >
+          <el-input v-model="temp.password"></el-input>
+        </el-form-item>
+        <el-form-item label="年龄" >
+          <el-input v-model="temp.age"></el-input>
+        </el-form-item>
+      </el-form>
+
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="centerDialogVisible = false">取 消</el-button>
+     <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">添加</el-button>
+    <el-button v-else type="primary"  @click="updateData">更新</el-button>
+  </span>
+</el-dialog>
     </div>
 </template>
 <script>
@@ -53,11 +76,7 @@ export default {
       name: "表格",
       listQuery: {
         page: 1,
-        limit: 3,
-        importance: undefined,
-        title: undefined,
-        type: undefined,
-        sort: "+id"
+        limit: 3
       },
       users: [
         {
@@ -86,38 +105,143 @@ export default {
         }
       ],
       newusers: [],
-      total: null
+      total: null,
+      centerDialogVisible: false,
+      dialogStatus: "",
+      temp: {
+        id: undefined,
+        age: "",
+        password: "",
+        userName: ""
+      },
+      textMap: {
+        update: "修改用户信息",
+        create: "添加用户信息"
+      }
     };
   },
   created() {
-    this.getUsers()
+    this.getUsers();
   },
   methods: {
+    //获取数据
     getUsers() {
       axios
-      .get("http://localhost:8888/getList",{
-          params:{
-              pageNum:this.listQuery.page,
-              pageSize:this.listQuery.limit
+        .get("http://localhost:8888/getList", {
+          params: {
+            pageNum: this.listQuery.page,
+            pageSize: this.listQuery.limit
           }
-      })
-      .then(response => {
-           //console.log(response);
-         this.newusers = response.data.list
-         this.total=response.data.total
-      })
-      .catch(error => {
-        console.log("axios==" + error);
-      });
+        })
+        .then(response => {
+          //console.log(response);
+          this.newusers = response.data.list;
+          this.total = response.data.total;
+        })
+        .catch(error => {
+          console.log("axios==" + error);
+        });
     },
+    //修改每页的数量，重新获取数据
     handleSizeChange(val) {
       this.listQuery.limit = val;
       this.getUsers();
     },
-     handleCurrentChange(val) {
-      this.listQuery.page = val
-      this.getUsers()
+    // 修改第几页。
+    handleCurrentChange(val) {
+      this.listQuery.page = val;
+      this.getUsers();
     },
+    //修改用户信息之前获取该用户信息
+    handleUpdate(row) {
+      //   console.log(row);
+      this.dialogStatus = "update";
+      this.temp = Object.assign({}, row); // copy obj
+      this.centerDialogVisible = true;
+      this.$nextTick(() => {
+        this.$refs["dataForm"].clearValidate();
+      });
+    },
+    //修改用户信息
+    updateData() {
+      this.$refs["dataForm"].validate(valid => {
+        if (valid) {
+          const tempData = Object.assign({}, this.temp);
+          //console.log(tempData);
+          axios
+            .get("http://localhost:8888/updateUser", {
+              params: tempData
+            })
+            .then(() => {
+              this.getUsers();
+            });
+          this.centerDialogVisible = false;
+          this.$notify({
+            title: "成功",
+            message: "更新成功",
+            type: "success",
+            duration: 2000
+          });
+        }
+      });
+    },
+    //删除用户信息
+    handleDelete(row) {
+      console.log(row.id);
+      this.$confirm("确认删除？")
+        .then(_ => {
+          axios
+            .get("http://localhost:8888/deleteUser", {
+              params: {
+                id: row.id
+              }
+            })
+            .then(() => {
+              this.getUsers();
+            })
+            .catch(error => {
+              console.log("axios==" + error);
+            });
+        })
+        .catch(_ => {
+          this.getUsers();
+        });
+    },
+    //添加用户信息之前
+    resetTemp() {
+      this.temp = {
+        id: undefined,
+        age: "",
+        password: "",
+        userName: ""
+      };
+    },
+    handleCreate() {
+      this.resetTemp(); //清空表单数据
+      this.dialogStatus = "create";
+      this.centerDialogVisible = true;
+      this.$nextTick(() => {
+        this.$refs["dataForm"].clearValidate();
+      });
+    },
+    //添加用户
+    createData() {
+      const tempData = Object.assign({}, this.temp);
+      axios
+        .get("http://localhost:8888/addUser", {
+          params: tempData
+        })
+        .then(() => {
+          this.getUsers();
+        });
+      this.centerDialogVisible = false;
+      this.$notify({
+        title: "成功",
+        message: "添加成功",
+        type: "success",
+        duration: 2000
+      });
+    }
   }
 };
 </script>
