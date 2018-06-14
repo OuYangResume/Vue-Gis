@@ -1,13 +1,17 @@
 <template>
     <div>
-        分页{{name}}
-
-    <div >
-      <el-button  style="margin-left: 10px;" @click="handleCreate" type="primary" icon="el-icon-edit">add</el-button>
+    <div class="filter-container">
+      <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="输入您要查询的用户" v-model="listQuery.userName">
+      </el-input>
+       <el-button class="filter-item" type="primary"  icon="el-icon-search" @click="handleFilter">搜索</el-button>
+      <el-button  style="margin-left: 10px;" @click="handleCreate" type="success" class="filter-item" icon="el-icon-edit">添加</el-button>
     </div>
 
     <el-table :data="newusers"   element-loading-text="给我一点时间" border fit highlight-current-row
       style="width: 100%">
+      <el-table-column align="center"  width="65" type="index">
+        
+      </el-table-column>
       <el-table-column align="center"  width="65" label="id">
         <template slot-scope="scope" >
           <span>{{scope.row.id}}</span>
@@ -76,7 +80,8 @@ export default {
       name: "表格",
       listQuery: {
         page: 1,
-        limit: 3
+        limit: 3,
+        userName:""
       },
       users: [
         {
@@ -127,20 +132,26 @@ export default {
     //获取数据
     getUsers() {
       axios
-        .get("http://localhost:8888/getList", {
+        .get("http://localhost:8888/selectUserList", {
           params: {
-            pageNum: this.listQuery.page,
-            pageSize: this.listQuery.limit
+            page: this.listQuery.page,
+            rows: this.listQuery.limit,
+            userName:this.listQuery.userName
           }
         })
         .then(response => {
-          //console.log(response);
+          console.log(response);
           this.newusers = response.data.list;
           this.total = response.data.total;
         })
         .catch(error => {
           console.log("axios==" + error);
         });
+    },
+    //添加用户名的模糊搜索
+    handleFilter(){
+      this.listQuery.page = 1;
+      this.getUsers();
     },
     //修改每页的数量，重新获取数据
     handleSizeChange(val) {
@@ -174,14 +185,14 @@ export default {
             })
             .then(() => {
               this.getUsers();
+              this.centerDialogVisible = false;
+              this.$notify({
+                title: "成功",
+                message: "更新成功",
+                type: "success",
+                duration: 2000
+              });
             });
-          this.centerDialogVisible = false;
-          this.$notify({
-            title: "成功",
-            message: "更新成功",
-            type: "success",
-            duration: 2000
-          });
         }
       });
     },
@@ -198,6 +209,13 @@ export default {
             })
             .then(() => {
               this.getUsers();
+              this.$notify({
+                title: "成功",
+                message: "删除成功",
+                type: "success",
+                duration: 2000,
+                position: "top-right"
+              });
             })
             .catch(error => {
               console.log("axios==" + error);
@@ -233,15 +251,36 @@ export default {
         })
         .then(() => {
           this.getUsers();
+          this.centerDialogVisible = false;
+          this.$notify({
+            title: "成功",
+            message: "添加成功",
+            type: "success",
+            duration: 2000
+          });
+        })
+        .catch(error => {
+          console.log("axios==" + error);
+          this.centerDialogVisible = false;
+           this.$notify({
+            title: "失败",
+            message: "添加失败",
+            type: "error",
+            duration: 2000
+          });
         });
-      this.centerDialogVisible = false;
-      this.$notify({
-        title: "成功",
-        message: "添加成功",
-        type: "success",
-        duration: 2000
-      });
     }
   }
 };
 </script>
+
+<style scoped>
+.filter-container{
+  padding-bottom: 10px;
+}
+.filter-item {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 10px;
+  }
+</style>

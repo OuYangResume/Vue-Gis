@@ -3,7 +3,9 @@
     <div id="mapid">    
     </div>
     <el-row>
-        <el-button plain>使用element-ui</el-button>
+       <el-tooltip class="item" effect="dark" content="Bottom Left 提示文字" placement="top-start">
+            <el-button plain>使用element-ui</el-button>
+       </el-tooltip>
         <el-button type="primary" plain v-on:click="addMapMarker()">添加Awesome图标</el-button>
         <el-button type="success" round v-on:click="addClusterLayer()">添加聚类图层</el-button>
         <el-button type="warning"  v-on:click="heatMapLayer()">添加热力图层</el-button>
@@ -20,8 +22,6 @@ import mapProvider from "../../../../static/script/leaflet.MapProviders.js";
 
 import markerClusterGroup from "leaflet.markercluster";
 import Easybutton from "leaflet-easybutton";
-
-
 export default {
   name: "mapContainer",
   data() {
@@ -189,7 +189,7 @@ export default {
       } else {
         //热力图的清除功能
         this.map.removeLayer(this.heatLayer);
-        this.heatMap=true;
+        this.heatMap = true;
       }
     },
     deleteLayer() {}
@@ -204,7 +204,7 @@ export default {
     //获取数据
     axios.get("../../../static/data/county.json").then(response => {
       //  console.log(response.data);
-       return (this.dataTest = response.data[0].items);
+      return (this.dataTest = response.data[0].items);
     });
   }
 };

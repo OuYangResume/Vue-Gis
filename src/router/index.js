@@ -181,6 +181,6 @@ const router2=[
 ]
 
 export default new  VueRouter({
-    mode: 'history',
+     mode: 'history',
     routes:router2
 })
