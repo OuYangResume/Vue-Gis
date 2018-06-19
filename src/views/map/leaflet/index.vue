@@ -6,6 +6,7 @@
        <el-tooltip class="item" effect="dark" content="Bottom Left 提示文字" placement="top-start">
             <el-button plain>使用element-ui</el-button>
        </el-tooltip>
+        <el-button type="success" v-on:click="addwmsLayer()">geoserver发布的服务</el-button>
         <el-button type="primary" plain v-on:click="addMapMarker()">添加Awesome图标</el-button>
         <el-button type="success" round v-on:click="addClusterLayer()">添加聚类图层</el-button>
         <el-button type="warning"  v-on:click="heatMapLayer()">添加热力图层</el-button>
@@ -16,7 +17,6 @@
 </template>
 
 <script>
-
 import axios from "axios";
 import mapProvider from "../../../../static/script/leaflet.MapProviders.js";
 
@@ -29,6 +29,7 @@ export default {
       MapMarker: true,
       markercluster: true,
       heatMap: true,
+      WMS: true,
       map: null,
       map_config: {
         zoom: 10,
@@ -39,7 +40,8 @@ export default {
       group: null, //一个marke点图层
       markers: null, //聚类点图层
       dataTest: null, //数据源
-      heatLayer: null //热力图图层
+      heatLayer: null, //热力图图层
+      wmsLayer: null //wms图层
     };
   },
   methods: {
@@ -69,6 +71,26 @@ export default {
           attribution: this.map_config.attribution
         })
         .addTo(this.map);
+    },
+    addwmsLayer() {
+      if (this.WMS) {
+        this.wmsLayer = L.tileLayer.wms(
+          "http://39.108.100.163:8080/geoserver/xiningTest/wms",
+          {
+            layers: "xiningTest:psfqbj",
+            version: "1.1.0",
+            uppercase: true,
+            transparent: true
+          }
+        );
+        this.map.addLayer(this.wmsLayer);
+        this.map.flyTo([36.644561,101.710322],12);
+        this.WMS = false;
+      } else {
+        this.map.removeLayer(this.wmsLayer);
+        this.map.panTo([37.5, 106]);
+        this.WMS = true;
+      }
     },
     addMapMarker() {
       //使用AwesomeMarkers图标
