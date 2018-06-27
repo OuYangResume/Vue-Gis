@@ -22,7 +22,7 @@
           <span>{{scope.row.userName}}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="150px" width="150px" label="密码" >
+      <el-table-column min-width="150px" width="80" align="center" label="密码" >
         <template slot-scope="scope">
           <span>{{scope.row.password}}</span>
         </template>
@@ -30,6 +30,12 @@
       <el-table-column width="110px" align="center" label="年龄">
         <template slot-scope="scope">
           <span>{{scope.row.age}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column width="180" align="center" label="地址">
+        <template slot-scope="scope">
+          <span v-if="scope.row.lnglat.length>0">{{scope.row.lnglat[0].address}}</span>
+          <span v-else>该用户还未添加地址</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="操作" width="230" class-name="small-padding fixed-width">
@@ -52,7 +58,7 @@
   :visible.sync="centerDialogVisible"
   width="30%"
   center>
-    <el-form ref="dataForm"  :model="temp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
+    <el-form ref="dataForm"  :model="temp" label-position="left" label-width="70px" style='width: 80%; margin-left:50px;'>
         <el-form-item label="名称" >
           <el-input v-model="temp.userName"></el-input>
         </el-form-item>
@@ -61,6 +67,9 @@
         </el-form-item>
         <el-form-item label="年龄" >
           <el-input v-model="temp.age"></el-input>
+        </el-form-item>
+         <el-form-item label="地址名称" >
+          <el-input v-model="temp.address"></el-input>
         </el-form-item>
       </el-form>
 
@@ -81,7 +90,7 @@ export default {
       listQuery: {
         page: 1,
         limit: 3,
-        userName:""
+        userName: ""
       },
       users: [
         {
@@ -117,7 +126,8 @@ export default {
         id: undefined,
         age: "",
         password: "",
-        userName: ""
+        userName: "",
+        address: ""
       },
       textMap: {
         update: "修改用户信息",
@@ -136,11 +146,11 @@ export default {
           params: {
             page: this.listQuery.page,
             rows: this.listQuery.limit,
-            userName:this.listQuery.userName
+            userName: this.listQuery.userName
           }
         })
         .then(response => {
-          console.log(response);
+          //consoleconsole.log(response);
           this.newusers = response.data.list;
           this.total = response.data.total;
         })
@@ -149,7 +159,7 @@ export default {
         });
     },
     //添加用户名的模糊搜索
-    handleFilter(){
+    handleFilter() {
       this.listQuery.page = 1;
       this.getUsers();
     },
@@ -165,9 +175,14 @@ export default {
     },
     //修改用户信息之前获取该用户信息
     handleUpdate(row) {
-      //   console.log(row);
+      console.log(row);
       this.dialogStatus = "update";
       this.temp = Object.assign({}, row); // copy obj
+      if (row.lnglat.length > 0) {
+        this.temp.address = row.lnglat["0"].address;
+      } else {
+        this.temp.address = "";
+      }
       this.centerDialogVisible = true;
       this.$nextTick(() => {
         this.$refs["dataForm"].clearValidate();
@@ -198,7 +213,7 @@ export default {
     },
     //删除用户信息
     handleDelete(row) {
-      console.log(row.id);
+      // console.log(row.id);
       this.$confirm("确认删除？")
         .then(_ => {
           axios
@@ -231,7 +246,8 @@ export default {
         id: undefined,
         age: "",
         password: "",
-        userName: ""
+        userName: "",
+        address: ""
       };
     },
     handleCreate() {
@@ -247,7 +263,11 @@ export default {
       const tempData = Object.assign({}, this.temp);
       axios
         .get("http://localhost:8888/addUser", {
-          params: tempData
+          params: {
+            age: tempData.age,
+            password: tempData.password,
+            userName: tempData.userName
+          }
         })
         .then(() => {
           this.getUsers();
@@ -262,7 +282,7 @@ export default {
         .catch(error => {
           console.log("axios==" + error);
           this.centerDialogVisible = false;
-           this.$notify({
+          this.$notify({
             title: "失败",
             message: "添加失败",
             type: "error",
@@ -275,12 +295,12 @@ export default {
 </script>
 
 <style scoped>
-.filter-container{
+.filter-container {
   padding-bottom: 10px;
 }
 .filter-item {
-    display: inline-block;
-    vertical-align: middle;
-    margin-bottom: 10px;
-  }
+  display: inline-block;
+  vertical-align: middle;
+  margin-bottom: 10px;
+}
 </style>

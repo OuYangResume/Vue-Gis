@@ -51,6 +51,13 @@
   :visible.sync="centerDialogVisible"
   width="30%"
   center>
+
+  <el-dialog
+      width="80%"
+      :visible.sync="innerVisible"
+      append-to-body>
+      <pickUpMap v-on:getLngLat="getzuobiao">地图窗口</pickUpMap>
+    </el-dialog>
     <el-form  :model="temp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
         
         <el-form-item label="日期" prop="date" >
@@ -64,21 +71,28 @@
           <el-input v-model="temp.address"></el-input>
         </el-form-item>
       </el-form>
-
+  <el-button type="primary" @click="innerVisible = true">拾取坐标</el-button>
   <span slot="footer" class="dialog-footer">
     <el-button @click="centerDialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
   </span>
 </el-dialog>
+
 </div>
   
 </template>
 
 <script>
+import draw from "@/views/map/leaflet/draw"
+import pickUpMap from "@/components/Map/PickUpMap"
 export default {
+  components: {
+    draw,pickUpMap
+  },
   data() {
     return {
       centerDialogVisible: false,
+      innerVisible: false,
       tableData: [
         {
           date: "2016-05-02",
@@ -104,7 +118,8 @@ export default {
       temp: {
         date: new Date(),
         name: "",
-        address: ""
+        address: "",
+        
       }
     };
   },
@@ -117,7 +132,10 @@ export default {
     },
     handleDelete(index, row) {
       console.log(index, row);
+    },
+    getzuobiao(lng,lat){
+        console.log(lng+"adfas"+lat)
     }
-  }
+  },
 };
 </script>

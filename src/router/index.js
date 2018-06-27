@@ -85,6 +85,12 @@ const router2=[
         name:'mapbox',
         component: () => import('@/views/map/mapbox'),
         meta: { title: 'mapbox', icon: 'example' },
+      },
+      {
+        path: 'pickup',
+        name:'pickup',
+        component: () => import('@/components/Map/PickUpMap'),
+        meta: { title: 'pickmap', icon: 'example' },
       }
     ]
   },
@@ -181,6 +187,6 @@ const router2=[
 ]
 
 export default new  VueRouter({
-     mode: 'history',
+    mode: 'history',
     routes:router2
 })

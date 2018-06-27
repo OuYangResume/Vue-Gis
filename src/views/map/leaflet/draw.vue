@@ -126,7 +126,7 @@ export default {
 @import url("https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css");
 #map {
   width: 100%;
-  height: 80vh;
+  height: 50vh;
 }
 </style>
 
