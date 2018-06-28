@@ -34,7 +34,7 @@
       </el-table-column>
       <el-table-column width="180" align="center" label="地址">
         <template slot-scope="scope">
-          <span v-if="scope.row.lnglat.length>0">{{scope.row.lnglat[0].address}}</span>
+          <span v-if="scope.row.lnglat.length>0 && scope.row.lnglat[0].address !=''">{{scope.row.lnglat[0].address}}</span>
           <span v-else>该用户还未添加地址</span>
         </template>
       </el-table-column>
@@ -127,7 +127,8 @@ export default {
         age: "",
         password: "",
         userName: "",
-        address: ""
+        address: "",
+        lnglatid: undefined
       },
       textMap: {
         update: "修改用户信息",
@@ -181,7 +182,12 @@ export default {
       if (row.lnglat.length > 0) {
         this.temp.address = row.lnglat["0"].address;
       } else {
-        this.temp.address = "";
+        this.temp.address = null;
+      }
+      if (row.lnglat.length > 0) {
+        this.temp.lnglatid = row.lnglat["0"].id;
+      } else {
+        this.temp.lnglatid = null;
       }
       this.centerDialogVisible = true;
       this.$nextTick(() => {
@@ -193,10 +199,17 @@ export default {
       this.$refs["dataForm"].validate(valid => {
         if (valid) {
           const tempData = Object.assign({}, this.temp);
-          //console.log(tempData);
+          console.log(tempData);
           axios
             .get("http://localhost:8888/updateUser", {
-              params: tempData
+              params: {
+                id: tempData.id,
+                age: tempData.age,
+                password: tempData.password,
+                userName: tempData.userName,
+                address: tempData.address,
+                lnglatid: tempData.lnglatid
+              }
             })
             .then(() => {
               this.getUsers();
@@ -266,7 +279,8 @@ export default {
           params: {
             age: tempData.age,
             password: tempData.password,
-            userName: tempData.userName
+            userName: tempData.userName,
+            address: tempData.address
           }
         })
         .then(() => {

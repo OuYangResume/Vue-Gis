@@ -51,12 +51,11 @@
   :visible.sync="centerDialogVisible"
   width="30%"
   center>
-
   <el-dialog
       width="80%"
       :visible.sync="innerVisible"
       append-to-body>
-      <pickUpMap v-on:getLngLat="getzuobiao">地图窗口</pickUpMap>
+      <pickUpMap v-on:getLngLat="getzuobiao" >地图窗口</pickUpMap>
     </el-dialog>
     <el-form  :model="temp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
         
@@ -70,8 +69,14 @@
         <el-form-item label="地址" >
           <el-input v-model="temp.address"></el-input>
         </el-form-item>
+        <el-form-item>
+      <el-button type="primary" @click="innerVisible = true">打开地图</el-button>
+      <el-input v-model="temp.x" :disabled="true"/>
+      <el-input v-model="temp.y" :disabled="true"/>
+       </el-form-item>
       </el-form>
-  <el-button type="primary" @click="innerVisible = true">拾取坐标</el-button>
+      
+</el-input>
   <span slot="footer" class="dialog-footer">
     <el-button @click="centerDialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
@@ -83,11 +88,12 @@
 </template>
 
 <script>
-import draw from "@/views/map/leaflet/draw"
-import pickUpMap from "@/components/Map/PickUpMap"
+import draw from "@/views/map/leaflet/draw";
+import pickUpMap from "@/components/Map/PickUpMap";
 export default {
   components: {
-    draw,pickUpMap
+    draw,
+    pickUpMap
   },
   data() {
     return {
@@ -119,23 +125,29 @@ export default {
         date: new Date(),
         name: "",
         address: "",
-        
+        x:null,
+        y:null
       }
     };
   },
   methods: {
+    //修改之前方法
     handleEdit(index, row) {
       // console.log(index, row);
       this.temp = Object.assign({}, row); // copy obj
       this.temp.date = new Date(this.temp.date);
       this.centerDialogVisible = true;
     },
+    // 删除方法
     handleDelete(index, row) {
       console.log(index, row);
     },
-    getzuobiao(lng,lat){
-        console.log(lng+"adfas"+lat)
+    //获取从map中的坐标
+    getzuobiao(lng, lat) {
+      this.temp.x=lng;
+      this.temp.y=lat
+      console.log(lng + "adfas" + lat);
     }
-  },
+  }
 };
 </script>

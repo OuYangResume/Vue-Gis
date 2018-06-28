@@ -1,18 +1,25 @@
 
+
 <template>
-    <div id="map">   
+<div>
+<div id="map">      
     </div>
+     <button @click="setLngLat" >获取坐标</button>
+</div>
+       
 </template>
 
 <script>
 export default {
+  props: {
+   
+  },
   data() {
     return {
       name: "地图",
       map: null,
       groupLayer: null,
-      lng: null,
-      lat: null
+      lnglat:{},
     };
   },
   methods: {
@@ -21,9 +28,11 @@ export default {
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 18
       }).addTo(this.map);
+
+      this.clickMap()
     },
     clickMap() {
-      var redMarker = L.AwesomeMarkers.icon({
+        var redMarker = L.AwesomeMarkers.icon({
         prefix: "fa",
         icon: "home",
         markerColor: "bule",
@@ -31,23 +40,27 @@ export default {
       });
       var groupLayer = L.layerGroup();
       this.map.addLayer(groupLayer);
-      this.map.on("click", function(e) {
+      this.lnglat=this.map.on("click", function(e) {
         groupLayer.clearLayers();
         var point = L.marker(e.latlng, { icon: redMarker });
         point.addTo(groupLayer);
         this.lng = e.latlng.lng;
         this.lat = e.latlng.lat;
-        console.log(this.lng + "aaaaaaa" + this.lat);
+        return {
+            lng:e.latlng.lng,
+            lat:e.latlng.lat
+        }
       });
+    
     },
-    setLngLat(e) {
-      this.$emit("getLngLat", this.lng, this.lat); //注册事件
-      e.preventDefault();
+    setLngLat: function(e) {
+        console.log(this.lnglat);
+       this.$emit("getLngLat", this.lnglat.lng, this.lnglat.lat); //注册事件
+      
     }
   },
   mounted() {
     this.initMap();
-    this.clickMap();
   }
 };
 </script>
