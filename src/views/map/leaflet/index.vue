@@ -78,6 +78,8 @@ export default {
           "http://39.108.100.163:8080/geoserver/xiningTest/wms",
           {
             layers: "xiningTest:psfqbj",
+            //解决图片把地图遮盖住的问题
+            format:"image/png",
             version: "1.1.0",
             uppercase: true,
             transparent: true
