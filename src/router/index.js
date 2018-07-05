@@ -9,21 +9,21 @@ Vue.use(VueRouter)
 /* Layout */
 import Layout from '../views/layout/Layout'
 
-export const router1=[
-   
+export const router1 = [
+
 ]
 
-const router2=[
+const router2 = [
   {
-     path:'',
+    path: '',
     component: Layout,
-    redirect:'/dashboard',
+    redirect: '/dashboard',
     // 控制菜单的显示隐藏
-    hidden:true,
-    name:'首页',
-    children:[{
-      path:'dashboard',
-      component:()=>import("@/views/dashboard"),
+    hidden: true,
+    name: '首页',
+    children: [{
+      path: 'dashboard',
+      component: () => import("@/views/dashboard"),
     }]
   },
 
@@ -31,19 +31,19 @@ const router2=[
     path: '/test',
     component: Layout,
     name: 'Test',
-    redirect:'/test/test',
+    redirect: '/test/test',
     meta: { title: 'vue常用功能', icon: 'example' },
     children: [
       {
         path: 'test',
-        name:'Test',
+        name: 'Test',
         component: () => import('@/views/test/test'),
         meta: { title: 'test', icon: 'example' },
       },
       {
         path: 'axios',
-        name:'Axios',
-        component: ()=>import("@/views/test/axios"),
+        name: 'Axios',
+        component: () => import("@/views/test/axios"),
         meta: { title: 'Axios', icon: 'example' },
       }
     ]
@@ -51,11 +51,11 @@ const router2=[
   {
     path: '/Translate',
     component: Layout,
-    name:'Translate',
+    name: 'Translate',
     children: [
       {
         path: 'Translate',
-        name:'Translate',
+        name: 'Translate',
         component: () => import('@/views/translate/translate'),
         meta: { title: '在线翻译', icon: 'example' },
       }
@@ -64,52 +64,53 @@ const router2=[
   {
     path: '/map',
     component: Layout,
-    name:'Map',
-    redirect:'/map/leaflet',
+    name: 'Map',
+    redirect: '/map/leaflet',
     meta: { title: 'Map地图', icon: 'example' },
     children: [
       {
         path: 'leaflet',
-        name:'leaflet',
+        name: 'leaflet',
         component: () => import('@/views/map/leaflet'),
         meta: { title: 'leaflet', icon: 'example' },
       },
       {
         path: 'draw',
-        name:'map',
+        name: 'map',
         component: () => import('@/views/map/leaflet/draw'),
         meta: { title: 'draw', icon: 'example' },
       },
       {
         path: 'mapbox',
-        name:'mapbox',
+        name: 'mapbox',
         component: () => import('@/views/map/mapbox'),
         meta: { title: 'mapbox', icon: 'example' },
       },
-      {
-        path: 'pickup',
-        name:'pickup',
-        component: () => import('@/components/Map/PickUpMap'),
-        meta: { title: 'pickmap', icon: 'example' },
-      }
+      //坐标拾取组件
+      // {
+      //   path: 'pickup',
+      //   name: 'pickup',
+      //   component: () => import('@/components/Map/PickUpMap'),
+      //   meta: { title: 'pickmap', icon: 'example' },
+      // }
     ]
   },
   {
     path: '/echarts',
     component: Layout,
-    name:'echarts',
-    redirect:'/echarts/mixChart',
+    name: 'echarts',
+    redirect: '/echarts/mixChart',
     meta: { title: 'echarts', icon: 'example' },
     children: [
       {
         path: 'mixChart',
-        name:'mixChart',
+        name: 'mixChart',
         component: () => import('@/views/echarts/mixChart/index'),
         meta: { title: '混合图', icon: 'example' },
       },
       {
         path: 'barChart',
-        name:'barChart',
+        name: 'barChart',
         component: () => import('@/views/echarts/barChart'),
         meta: { title: '柱状图', icon: 'example' },
       },
@@ -119,41 +120,46 @@ const router2=[
   {
     path: '/element',
     component: Layout,
-    name:'element',
-    redirect:'/element/elementIndex',
+    name: 'element',
+    redirect: '/element/elementIndex',
     meta: { title: 'element', icon: 'example' },
     children: [
       {
         path: '/element/table',
-        name:'table',
-        redirect:'/element/table/basictable',
+        name: 'table',
+        redirect: '/element/table/basictable',
         component: () => import('@/views/element/table/index'),
         meta: { title: 'table', icon: 'example' },
-        children:[
+        children: [
           {
             path: 'basictable',
-            name:'basictable',
+            name: 'basictable',
             component: () => import('@/views/element/table/basictable'),
-            meta: { title: '基础表格'}
+            meta: { title: '基础表格' }
           },
           {
             path: 'treetable',
-            name:'treetable',
+            name: 'treetable',
             component: () => import('@/views/element/table/treetable'),
-            meta: { title: '树表格'}
-          },{
-            path:'paginationtable',
-            name:'分页',
-            component:() =>import('@/views/element/table/paginationtable'),
-            meta:{title:'分页表格'}
+            meta: { title: '树表格' }
+          }, {
+            path: 'paginationtable',
+            name: '分页',
+            component: () => import('@/views/element/table/paginationtable'),
+            meta: { title: '分页表格' }
           }
         ]
       },
       {
         path: 'elementIndex',
-        name:'elementIndex',
+        name: 'elementIndex',
         component: () => import('@/views/element'),
         meta: { title: '饿了么', icon: 'example' },
+      }, {
+        path: 'uploadFile',
+        name: 'upload',
+        component: () => import('@/views/element/uploadFile'),
+        meta: { title: '上传组件' }
       }
     ]
   },
@@ -186,7 +192,7 @@ const router2=[
   // },
 ]
 
-export default new  VueRouter({
-    mode: 'history',
-    routes:router2
+export default new VueRouter({
+  mode: 'history',
+  routes: router2
 })
