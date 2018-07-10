@@ -45,6 +45,14 @@ const router2 = [
         name: 'Axios',
         component: () => import("@/views/test/axios"),
         meta: { title: 'Axios', icon: 'example' },
+      },
+      {
+        path: 'mock',
+        name: 'Mock',
+        component: () => import('@/views/test/Mock'),
+        meta: {
+          title: '随机数据'
+        }
       }
     ]
   },
