@@ -1,19 +1,19 @@
 <template>
-<div>
-    <div id="mapid">    
+  <div>
+    <div id="mapid">
     </div>
     <el-row>
-       <el-tooltip class="item" effect="dark" content="Bottom Left 提示文字" placement="top-start">
-            <el-button plain>使用element-ui</el-button>
-       </el-tooltip>
-        <el-button type="success" v-on:click="addwmsLayer()">geoserver发布的服务</el-button>
-        <el-button type="primary" plain v-on:click="addMapMarker()">添加Awesome图标</el-button>
-        <el-button type="success" round v-on:click="addClusterLayer()">添加聚类图层</el-button>
-        <el-button type="warning"  v-on:click="heatMapLayer()">添加热力图层</el-button>
+      <el-tooltip class="item" effect="dark" content="Bottom Left 提示文字" placement="top-start">
+        <el-button plain>使用element-ui</el-button>
+      </el-tooltip>
+      <el-button type="success" v-on:click="addwmsLayer()">geoserver发布的服务</el-button>
+      <el-button type="primary" plain v-on:click="addMapMarker()">添加Awesome图标</el-button>
+      <el-button type="success" round v-on:click="addClusterLayer()">添加聚类图层</el-button>
+      <el-button type="warning" v-on:click="heatMapLayer()">添加热力图层</el-button>
     </el-row>
     <!-- <button  v-on:click="deleteLayer()">清除</button> -->
-</div>
-    
+  </div>
+
 </template>
 
 <script>
@@ -77,16 +77,16 @@ export default {
         this.wmsLayer = L.tileLayer.wms(
           "http://39.108.100.163:8080/geoserver/xiningTest/wms",
           {
-            layers: "xiningTest:psfqbj",
+            layers: "xiningTest:psfqbj1",
             //解决图片把地图遮盖住的问题
-            format:"image/png",
+            format: "image/png",
             version: "1.1.0",
             uppercase: true,
             transparent: true
           }
         );
         this.map.addLayer(this.wmsLayer);
-        this.map.flyTo([36.644561,101.710322],12);
+        this.map.flyTo([36.644561, 101.710322], 12);
         this.WMS = false;
       } else {
         this.map.removeLayer(this.wmsLayer);
