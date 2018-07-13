@@ -1,8 +1,8 @@
 <template>
-<div>
-<div id="map"></div>
-</div>
-    
+  <div>
+    <div id="map"></div>
+  </div>
+
 </template>
 
 <script>
@@ -12,7 +12,7 @@ export default {
   name: "draw",
   data() {
     return {
-      map: null,
+      map: null
     };
   },
   methods: {
@@ -83,14 +83,11 @@ export default {
         }
         if (type === "polyline") {
           // console.log(e.layer.editing.latlngs);
-        
           // var from = turf.point([-75.343, 39.984]);
           // var to = turf.point([-75.534, 39.123]);
           // var options = { units: "kilometers" };
-
           // var distance = turf.distance(from, to, options);
           // console.log(distance);
-           
         }
         if (type === "polygon") {
           console.log(e.layer.editing.latlngs["0"]);
@@ -112,8 +109,7 @@ export default {
 
         editableLayers.addLayer(layer);
       });
-    },
-   
+    }
   },
   mounted() {
     this.initMap();
@@ -126,7 +122,7 @@ export default {
 @import url("https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css");
 #map {
   width: 100%;
-  height: 50vh;
+  height: 80vh;
 }
 </style>
 

@@ -1,28 +1,27 @@
 <template>
-    <div>
+  <div>
     <div class="filter-container">
       <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="输入您要查询的用户" v-model="listQuery.userName">
       </el-input>
-       <el-button class="filter-item" type="primary"  icon="el-icon-search" @click="handleFilter">搜索</el-button>
-      <el-button  style="margin-left: 10px;" @click="handleCreate" type="success" class="filter-item" icon="el-icon-edit">添加</el-button>
+      <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">搜索</el-button>
+      <el-button style="margin-left: 10px;" @click="handleCreate" type="success" class="filter-item" icon="el-icon-edit">添加</el-button>
     </div>
 
-    <el-table :data="newusers"   element-loading-text="给我一点时间" border fit highlight-current-row
-      style="width: 100%">
-      <el-table-column align="center"  width="65" type="index">
-        
+    <el-table :data="newusers" element-loading-text="给我一点时间" border fit highlight-current-row style="width: 100%">
+      <el-table-column align="center" width="65" type="index">
+
       </el-table-column>
-      <el-table-column align="center"  width="65" label="id">
-        <template slot-scope="scope" >
+      <el-table-column align="center" width="65" label="id">
+        <template slot-scope="scope">
           <span>{{scope.row.id}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="150px" align="center"  label="姓名">
+      <el-table-column width="150px" align="center" label="姓名">
         <template slot-scope="scope">
           <span>{{scope.row.userName}}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="150px" width="80" align="center" label="密码" >
+      <el-table-column min-width="150px" width="80" align="center" label="密码">
         <template slot-scope="scope">
           <span>{{scope.row.password}}</span>
         </template>
@@ -41,45 +40,39 @@
       <el-table-column align="center" label="操作" width="230" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改</el-button>
-          <el-button  size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <div class="pagination-container">
-      <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
-       :current-page="listQuery.page" :page-sizes="[3,5,8, 10]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
+      <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="listQuery.page" :page-sizes="[3,5,8, 10]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
 
-
-    <el-dialog
-  :title="textMap[dialogStatus]"
-  :visible.sync="centerDialogVisible"
-  width="30%"
-  center>
-    <el-form ref="dataForm"  :model="temp" label-position="left" label-width="70px" style='width: 80%; margin-left:50px;'>
-        <el-form-item label="名称" >
+    <el-dialog :title="textMap[dialogStatus]" :visible.sync="centerDialogVisible" width="30%" center>
+      <el-form ref="dataForm" :model="temp" label-position="left" label-width="70px" style='width: 80%; margin-left:50px;'>
+        <el-form-item label="名称">
           <el-input v-model="temp.userName"></el-input>
         </el-form-item>
-        <el-form-item label="密码" >
+        <el-form-item label="密码">
           <el-input v-model="temp.password"></el-input>
         </el-form-item>
-        <el-form-item label="年龄" >
+        <el-form-item label="年龄">
           <el-input v-model="temp.age"></el-input>
         </el-form-item>
-         <el-form-item label="地址名称" >
+        <el-form-item label="地址名称">
           <el-input v-model="temp.address"></el-input>
         </el-form-item>
       </el-form>
 
-  <span slot="footer" class="dialog-footer">
-    <el-button @click="centerDialogVisible = false">取 消</el-button>
-     <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">添加</el-button>
-    <el-button v-else type="primary"  @click="updateData">更新</el-button>
-  </span>
-</el-dialog>
-    </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="centerDialogVisible = false">取 消</el-button>
+        <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">添加</el-button>
+        <el-button v-else type="primary" @click="updateData">更新</el-button>
+      </span>
+    </el-dialog>
+  </div>
 </template>
 <script>
 import axios from "axios";
@@ -143,7 +136,7 @@ export default {
     //获取数据
     getUsers() {
       axios
-        .get("http://localhost:8888/selectUserList", {
+        .get("http://39.108.100.163:8888/selectUserList", {
           params: {
             page: this.listQuery.page,
             rows: this.listQuery.limit,
@@ -201,7 +194,7 @@ export default {
           const tempData = Object.assign({}, this.temp);
           console.log(tempData);
           axios
-            .get("http://localhost:8888/updateUser", {
+            .get("http://39.108.100.163:8888/updateUser", {
               params: {
                 id: tempData.id,
                 age: tempData.age,
@@ -230,7 +223,7 @@ export default {
       this.$confirm("确认删除？")
         .then(_ => {
           axios
-            .get("http://localhost:8888/deleteUser", {
+            .get("http://39.108.100.163:8888/deleteUser", {
               params: {
                 id: row.id
               }
@@ -275,7 +268,7 @@ export default {
     createData() {
       const tempData = Object.assign({}, this.temp);
       axios
-        .get("http://localhost:8888/addUser", {
+        .get("http://39.108.100.163:8888/addUser", {
           params: {
             age: tempData.age,
             password: tempData.password,
