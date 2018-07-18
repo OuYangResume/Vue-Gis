@@ -94,6 +94,12 @@ const router2 = [
         component: () => import('@/views/map/mapbox'),
         meta: { title: 'mapbox', icon: 'example' },
       },
+      {
+        path: 'openlayer',
+        name: 'openlayer',
+        component: () => import('@/views/map/openlayer'),
+        meta: { title: 'openlayer' },
+      },
       //坐标拾取组件
       // {
       //   path: 'pickup',
