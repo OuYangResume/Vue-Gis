@@ -1,6 +1,7 @@
 # vueapp
 
-> A Vue.js project
+> 由于公司网络不允许访问github。所以最新代码已经上传到自己搭的gitbucket了。
+> 地址：[最新代码](http://39.108.100.163:8080/root/vueapp)
 
 ## Build Setup
 
