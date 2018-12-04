@@ -183,7 +183,7 @@ export default {
       }
     },
     heatMapLayer() {
-      // console.log(this.dataTest);
+       console.log(this.dataTest);
       var testData1 = {
         max: 8,
         data: this.dataTest

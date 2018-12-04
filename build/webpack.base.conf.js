@@ -1,3 +1,4 @@
+const webpack=require('webpack')//引入jquery用
 'use strict'
 const path = require('path')
 const utils = require('./utils')
@@ -34,6 +35,10 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.scss$/,
+        loaders: ["style", "css", "sass"]
+      },
+      {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: vueLoaderConfig
@@ -69,6 +74,13 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin('common.js'),//引入公共common.js用
+    new webpack.ProvidePlugin({//引入jquery用
+      $: "jquery",
+      jQuery: "jquery"
+    })
+  ],
   node: {
     // prevent webpack from injecting useless setImmediate polyfill because Vue
     // source contains it (although only uses it if it's native).

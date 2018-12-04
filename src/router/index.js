@@ -47,11 +47,19 @@ const router2 = [
         meta: { title: 'Axios', icon: 'example' },
       },
       {
+        path: 'canvas',
+        name: 'canvas',
+        component: () => import('@/views/test/Canvas'),
+        meta: {
+          title: 'canvas'
+        }
+      },
+      {
         path: 'mock',
-        name: 'Mock',
+        name: 'mock',
         component: () => import('@/views/test/Mock'),
         meta: {
-          title: '随机数据'
+          title: 'Mock'
         }
       }
     ]
@@ -100,6 +108,14 @@ const router2 = [
         component: () => import('@/views/map/openlayer'),
         meta: { title: 'openlayer' },
       },
+      {
+        path: 'maptalks',
+        name: 'maptalks',
+        component: () => import('@/views/map/maptalks'),
+        meta: { title: 'maptalks' },
+
+        
+      }
       //坐标拾取组件
       // {
       //   path: 'pickup',
