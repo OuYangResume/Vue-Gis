@@ -193,33 +193,17 @@ const router2 = [
       }
     ]
   },
-  // {
-  //   path: '/element',
-  //   component: Layout,
-  //   name:'element',
-  //   redirect:'/element/elementIndex',
-  //   meta: { title: 'element', icon: 'example' },
-  //   children: [
-  //     {
-  //       path: 'elementIndex',
-  //       name:'elementIndex',
-  //       component: () => import('@/views/element'),
-  //       meta: { title: '饿了么', icon: 'example' },
-  //     },
-  //     {
-  //       path: 'basictable',
-  //       name:'basictable',
-  //       component: () => import('@/views/element/table/basictable'),
-  //       meta: { title: '基础表格'}
-  //     },
-  //     {
-  //       path: 'treetable',
-  //       name:'treetable',
-  //       component: () => import('@/views/element/table/treetable'),
-  //       meta: { title: '树表格'}
-  //     },
-  //   ]
-  // },
+  {
+    path: '/three',
+    component: Layout,
+    name: '3Dthree',
+    meta: { title: 'three', icon: 'example' },
+    children: [{
+      path: 'three',
+      component: () => import("@/views/three"),
+      meta: { title: '3dthree', icon: 'example' },
+    }]
+  },
 ]
 
 export default new VueRouter({
