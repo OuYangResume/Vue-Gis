@@ -23,6 +23,7 @@
     "maptalks": "^0.40.5",
     "maptalks.heatmap": "^0.5.4",
     "maptalks.markercluster": "^0.8.2",
+    "material-design-icons": "^3.0.1",
     "mockjs": "^1.0.1-beta3",
     "npm": "^5.10.0",
     "ol": "^5.0.3",
