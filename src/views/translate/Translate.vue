@@ -5,13 +5,14 @@
     <translateForm v-on:formSubmit1="translateText"></translateForm>
     <TranslateOutput v-text="translatedText"></TranslateOutput>
 
-    <transition>
+    <!-- <transition>
       <div class="total-error"  v-if="visible">
         <i class="material-icons" style="fontSize: 14px">error</i>
         <p>{{msg}}</p>
         <i class="material-icons toast-close-btn" style="fontSize: 14px" v-if="showClose" @click.stop="close">close</i>
       </div>
-    </transition>
+    </transition> -->
+    <total :content="msg" :autoClose="true"></total>
   </div>
 </template>
 
@@ -20,11 +21,13 @@
 import axios from "axios";
 import TranslateForm from "./translateForm";
 import TranslateOutput from "./TranslateOutput";
+import total from "@/components/common/total"
 export default {
   name: "translate",
   components: {
     TranslateForm,
-    TranslateOutput
+    TranslateOutput,
+    total
   },
   data() {
     return {
@@ -97,6 +100,19 @@ $border-radius-middle: 4px;
   background-color: #fff;
   user-select: none;
   color: $error-color;
+  .toast-content {
+    margin-left: 4px;
+    max-width: $toast-width;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+    overflow: hidden;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
   .toast-close-btn {
     position: absolute;
     top: $position-offset;
