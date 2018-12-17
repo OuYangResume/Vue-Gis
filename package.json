@@ -21,6 +21,7 @@
     "leaflet.markercluster": "^1.3.0",
     "mapbox-gl": "^0.45.0",
     "maptalks": "^0.40.5",
+    "maptalks.esri": "0.0.2",
     "maptalks.heatmap": "^0.5.4",
     "maptalks.markercluster": "^0.8.2",
     "material-design-icons": "^3.0.1",

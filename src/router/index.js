@@ -85,16 +85,25 @@ const router2 = [
     meta: { title: 'Map地图', icon: 'example' },
     children: [
       {
-        path: 'leaflet',
+        path: '/map/leaflet',
         name: 'leaflet',
         component: () => import('@/views/map/leaflet'),
         meta: { title: 'leaflet', icon: 'example' },
-      },
-      {
-        path: 'draw',
-        name: 'map',
-        component: () => import('@/views/map/leaflet/draw'),
-        meta: { title: 'draw', icon: 'example' },
+        redirect: '/map/leaflet/index',
+        children: [
+          {
+            path: 'index',
+            name: 'map',
+            component: () => import('@/views/map/leaflet/map'),
+            meta: { title: 'map' }
+          },
+          {
+            path: 'draw',
+            name: 'draw',
+            component: () => import('@/views/map/leaflet/draw'),
+            meta: { title: 'draw', icon: 'example' },
+          },
+        ]
       },
       {
         path: 'mapbox',
@@ -109,12 +118,25 @@ const router2 = [
         meta: { title: 'openlayer' },
       },
       {
-        path: 'maptalks',
+        path: '/map/maptalks',
         name: 'maptalks',
         component: () => import('@/views/map/maptalks'),
-        meta: { title: 'maptalks' },
-
-        
+        meta: { title: 'maptalks', icon: 'example' },
+        redirect: '/map/leaflet/index',
+        children: [
+          {
+            path: 'wfs',
+            name: 'wfs',
+            component: () => import('@/views/map/maptalks/wfs'),
+            meta: { title: 'wfs' }
+          },
+          {
+            path: 'index',
+            name: 'map',
+            component: () => import('@/views/map/maptalks/map'),
+            meta: { title: 'map' }
+          }
+        ]
       }
       //坐标拾取组件
       // {

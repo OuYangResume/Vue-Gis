@@ -11,6 +11,12 @@
       >
         {{ iconType }}
       </i>
+      <i
+        class="material-icons"
+        style="fontSize: 14px"
+      >
+       add
+      </i>
       <p
         class="toast-content"
         :title="content"
