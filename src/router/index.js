@@ -141,6 +141,12 @@ const router2 = [
             name: 'move',
             component: () => import('@/views/map/maptalks/mapmove'),
             meta: { title: '移动轨迹' }
+          },
+          {
+            path: 'routerplay',
+            name: 'routerplay',
+            component: () => import('@/views/map/maptalks/routerplay'),
+            meta: { title: 'routerplay' }
           }
         ]
       }
