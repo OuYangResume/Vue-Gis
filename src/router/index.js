@@ -139,7 +139,7 @@ const router2 = [
           {
             path: 'move',
             name: 'move',
-            component: () => import('@/views/map/maptalks/mapmove'),
+            component: () => import('@/views/map/maptalks/mapmove1'),
             meta: { title: '移动轨迹' }
           },
           {

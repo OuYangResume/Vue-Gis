@@ -76,7 +76,9 @@ export default {
     speed(){
 
     },
-    speed1(){}
+    speed1(){
+        
+    }
   }
 };
 </script>

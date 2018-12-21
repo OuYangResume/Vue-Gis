@@ -58,7 +58,7 @@ export default {
     },
 
     open: function() {
-      // this.close();
+        this.close();
       this.isOpen = true;
       this.linePoints = this.getNewData(this.lineData);
       this.addLine(this.lineData);
@@ -112,7 +112,6 @@ export default {
       self.setInterval = setInterval(function() {
         if (self.isOpen) {
           setTimeout(function() {
-            console.log("asd");
             if (self.index < self.linePoints.length) {
               self.addPoint(self.linePoints[self.index]);
               if (self.index > 1) {
@@ -190,13 +189,15 @@ export default {
      clear:function(){
         this.vecLayer.clear();
         this.LinePoints1=[];
+        this.geoline =true;
+        this.geopoint =true;
     },
     close: function() {
-      this.suspended();
+      this.isOpen=false;
       if (this.setInterval) {
         window.clearInterval(this.setInterval);
       }
-      this.realTimeTrance.clear();
+      this.clear();
       this.index = 0;
       this.linePoints = [];
     }
