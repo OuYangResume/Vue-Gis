@@ -1,0 +1,2 @@
+webpackJsonp([19],{"48Ux":function(e,t){},lHc4:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r={render:function(){var e=this.$createElement,t=this._self._c||e;return t("div",{staticClass:"table"},[t("router-view")],1)},staticRenderFns:[]};var l=n("VU/8")(null,r,!1,function(e){n("48Ux")},null,null);t.default=l.exports}});
+//# sourceMappingURL=19.8996c0d13bb0d30647d1.js.map
