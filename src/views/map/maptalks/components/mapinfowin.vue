@@ -1,6 +1,6 @@
 <template>
     <div class="mapinfowin">
-            <div class="head">${attri.type}<div class="close">X</div></div>
+            <div class="head">{attri.type}<div class="close">X</div></div>
             <div class="main">
                 <div class="left">
                     <div class="title">人口总数</div>
@@ -20,7 +20,7 @@
 
 <script>
 export default {
-    
+    name:'demo'
 }
 </script>
 

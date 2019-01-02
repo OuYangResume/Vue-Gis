@@ -122,7 +122,7 @@ class realTimeTrance {
 }
 
 
-class Path_Animation {
+class RouterMove {
     /**
      * Path_Animation的构造函数
      * @param {*} options 
@@ -133,8 +133,8 @@ class Path_Animation {
         this.lineData = null || options.lineData; //传入的轨迹数据
         this.linePoints = null;//生成的新point
         this.setInterval = null;
-        this.isOpen = false;
-        this.speed = 2;
+        this.isOpen = true;
+        this.speed = 2 || options.speed;
         this.init();
     }
     setOptions(obj, options) {
@@ -253,9 +253,17 @@ class Path_Animation {
             for (var i = 0; i < line.length; i++) {
                 if (i + 1 < line.length) {
                     var lonlats = this.insertPoint(line[i], line[i + 1], this.time);
-                    points = points.concat(lonlats);
+                    //points = points.concat(lonlats);
+                    points= [...points,...lonlats]
                 }
             }
+            // for (let [key, value] of line) {
+            //     if (key + 1 < line.length) {
+            //         var lonlats = this.insertPoint(line[key], line[key + 1], this.time);
+            //         //points = points.concat(lonlats);
+            //         points=[...lonlats]
+            //     }
+            // }
             return points;
         }
 
@@ -279,4 +287,4 @@ class Path_Animation {
     }
 };
 
-export default Path_Animation;
+export default RouterMove;

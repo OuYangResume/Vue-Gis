@@ -4,6 +4,7 @@
     <div v-on:click="open">开始</div>
     <div @click="suspended">暂停</div>
     <div @click="continued">继续</div>
+    <div @click="close">清除</div>
   </div>
 </template>
 <script>
@@ -83,6 +84,9 @@ export default {
     },
     continued() {
       this.path.continued();
+    },
+    close(){
+      this.path.close();
     }
   }
 };

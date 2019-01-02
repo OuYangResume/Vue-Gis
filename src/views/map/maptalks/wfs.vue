@@ -3,8 +3,9 @@
 </template>
 
 <script>
+import Vue from "vue";
 import * as maptalks from "maptalks";
-import mapinfowin from "./components/mapinfowin"
+import mapinfowin from "./components/mapinfowin";
 
 export default {
   data() {
@@ -17,10 +18,13 @@ export default {
       }
     };
   },
+  components:{
+    mapinfowin
+  },
   mounted() {
     this.initMap();
     // this.addwfsLayer();
-    console.log(mapinfowin)
+    console.log(mapinfowin.render);
   },
   methods: {
     initMap() {
@@ -232,6 +236,7 @@ export default {
     //添加信息框
     setInfoWindow(geo) {
       var attri = geo.attributes;
+
       // var content =
       //     '<table class="infoWin" cellspacing="5" id="infoWin">';
       // for (var p in attri) {
@@ -262,8 +267,7 @@ export default {
         "</div>" +
         "</div>" +
         "</div>";
-      var content = 
-      `<div class="mapinfowin">
+      var content = `<div class="mapinfowin">
             <div class="head">${attri.type}<div class="close">X</div></div>
             <div class="main">
                 <div class="left">
@@ -280,11 +284,18 @@ export default {
                 </div>
             </div>
         </div>`;
+      console.log(content);
+      const ToastConstructor = Vue.extend(mapinfowin);
+
+      let instance = new ToastConstructor({
+        propsData: options
+      }).$mount(document.createElement("div"));
+      console.log(instance);
       var options = {
         content: content,
         width: 250, //弹窗的宽度
-        dx: 250, //向左右偏移
-        dy: 50 //上下偏移
+        // dx: 250, //向左右偏移
+        // dy: 50 //上下偏移
       };
 
       var infoWindow = new maptalks.ui.InfoWindow(options);
