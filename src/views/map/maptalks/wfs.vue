@@ -211,6 +211,28 @@ export default {
       }
       return polygons;
     },
+
+    getDemo(){
+        return(
+          <div class="mapinfowin">
+            <div class="head">aaa<div class="close">X</div></div>
+            <div class="main">
+                <div class="left">
+                    <div class="title">人口总数</div>
+                    <div class="number">38410</div>
+                    <div class="title">诉求数</div>
+                    <div class="number">379</div>
+                </div>
+                <div class="left">
+                    <div class="title">万人投诉率</div>
+                    <div class="number">11.23%</div>
+                    <div class="title">主要投诉</div>
+                    <div class="number">噪音污染</div>
+                </div>
+            </div>
+        </div>
+        )
+    },
     //polygons添加点击事件
     addInfoWin(geos) {
       var vm = this;
@@ -283,8 +305,11 @@ export default {
                     <div class="number">噪音污染</div>
                 </div>
             </div>
-        </div>`;
-      console.log(content);
+        </div>
+        `;
+
+        let aa =this.getDemo();
+      console.log(aa);
       const ToastConstructor = Vue.extend(mapinfowin);
 
       let instance = new ToastConstructor({
@@ -403,4 +428,6 @@ export default {
   }
 }
 </style>
+
+
 
