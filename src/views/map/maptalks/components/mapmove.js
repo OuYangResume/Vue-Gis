@@ -21,6 +21,22 @@ class realTimeTrance {
             'markerDy': 0,
             'markerOpacity': 1
         }
+        this.lineSymbol = {
+            lineColor: "#1bbc9b",
+            lineWidth: 6,
+            lineJoin: "round", //miter, round, bevel
+            lineCap: "round", //butt, round, square
+            lineDasharray: null, //dasharray, e.g. [10, 5, 5]
+            "lineOpacity ": 1
+        };
+        this.dynamicLineSymbol = {
+            lineColor: "rgba(250,0,0,1)",
+            lineWidth: 4,
+            lineJoin: "round", //miter, round, bevel
+            lineCap: "round", //butt, round, square
+            lineDasharray: null, //dasharray, e.g. [10, 5, 5]
+            "lineOpacity ": 1
+        }
         this.init();
     }
     init() {
@@ -44,7 +60,15 @@ class realTimeTrance {
     addGeometry(geometry) {
         this._vecLayer.addGeometry(geometry);
     }
-
+    /**
+     * 添加线
+     * @param {*} lineData 
+     */
+    addLine(lineData) {
+        var line = new maptalks.LineString(lineData);
+        line.setSymbol(this.lineSymbol);
+        this.addGeometry(line);
+    }
     addPoint(point) {
         this._LinePoints.push(point);
         if (this._LinePoints.length >= 2) {
@@ -61,15 +85,7 @@ class realTimeTrance {
             this.geomline = new maptalks.LineString(line, {
                 id: "geomline"
             });
-            var symbol = {
-                lineColor: "rgba(250,0,0,1)",
-                lineWidth: 4,
-                lineJoin: "round", //miter, round, bevel
-                lineCap: "round", //butt, round, square
-                lineDasharray: null, //dasharray, e.g. [10, 5, 5]
-                "lineOpacity ": 1
-            };
-            this.geomline.setSymbol(symbol);
+            this.geomline.setSymbol(this.dynamicLineSymbol);
             this.addGeometry(this.geomline);
             this.lineFeature = false;
             return;
@@ -111,6 +127,20 @@ class realTimeTrance {
     setMarkerStyle(style) {
         this.markerSymbol = style
     }
+    /**
+     * 设置底线的样式
+     * @param {*} style 
+     */
+    setLineStyle(style) {
+        this.lineSymbol = style
+    }
+    /**
+     * 设置动态线的样式
+     * @param {*} style 
+     */
+    setDynamicLineStyle(style) {
+        this.dynamicLineSymbol = style
+    }
     test() {
         console.log("测试类里面的方法")
         let point = [111.32450763502036, 31.667512417065313]
@@ -129,19 +159,21 @@ class RouterMove {
      */
     constructor(options) {
         this._map = options.map;
-        this.time = 100 || options.time;
-        this.lineData = null || options.lineData; //传入的轨迹数据
+        this.time = 100 ;
+        this.lineData = null; //传入的轨迹数据
         this.linePoints = null;//生成的新point
         this.setInterval = null;
-        this.isOpen = true;
-        this.speed = 2 || options.speed;
+        this.isOpen = true; //用于控制暂停。
+        this.isLineShow = true ; //是否显示轨迹底线。
+        this.speed = 2;//点的移动速度
+        this.setOptions(this,options)
         this.init();
     }
     setOptions(obj, options) {
         for (var i in options) {
-            obj.options[i] = options[i];
+            obj[i] = options[i];
         }
-        return obj.options;
+        return obj;
     }
     init() {
         var option = {
@@ -149,6 +181,9 @@ class RouterMove {
         };
         this.real = new realTimeTrance(option);
     }
+    /**
+     * 清除
+     */
     close() {
         this.isOpen = false;
         if (this.setInterval) {
@@ -164,21 +199,18 @@ class RouterMove {
     open() {
         this.close();
         this.isOpen = true;
-        this.addLine(this.lineData);
+        if (this.isLineShow) {
+            this.real.addLine(this.lineData);
+        }
         this.linePoints = this.getNewData(this.lineData);
         this.createInterval();
     }
     /**
-     * 暂停
+     * 暂停||继续
+     * @param { Boolean}
      */
-    suspended() {
-        this.isOpen = false;
-    }
-    /**
-     * 继续
-     */
-    continued() {
-        this.isOpen = true;
+    isContinued(boolean) {
+        this.isOpen = boolean;
     }
     /**
      * 设置轨迹数据
@@ -201,6 +233,27 @@ class RouterMove {
      */
     setMarkerStyle(style) {
         this.real.setMarkerStyle(style);
+    }
+    /**
+     * 设置线的样式
+     * @param {*} style 
+     */
+    setLineStyle(style) {
+        this.real.setLineStyle(style);
+    }
+    /**
+     * 设置动态线的样式
+     * @param {*} style 
+     */
+    setDynamicLineStyle(style) {
+        this.real.setDynamicLineStyle(style);
+    }
+    /**
+     * 轨迹底线的显示隐藏
+     * @param { Boolean} Boolean 
+     */
+    isVisible(boolean) {
+        this.isLineShow = boolean
     }
     /**
      * 创建定时器
@@ -229,19 +282,6 @@ class RouterMove {
         }, parseInt(self.time / self.speed));
     }
 
-    addLine(lineData) {
-        var lineSymbol = {
-            lineColor: "#1bbc9b",
-            lineWidth: 6,
-            lineJoin: "round", //miter, round, bevel
-            lineCap: "round", //butt, round, square
-            lineDasharray: null, //dasharray, e.g. [10, 5, 5]
-            "lineOpacity ": 1
-        };
-        var line = new maptalks.LineString(lineData);
-        line.setSymbol(lineSymbol);
-        this.real.addGeometry(line);
-    }
     getNewData(linePoints) {
         if (linePoints === null || linePoints.length < 2) {
             console.log("传入的数据格式不符！")
@@ -254,7 +294,7 @@ class RouterMove {
                 if (i + 1 < line.length) {
                     var lonlats = this.insertPoint(line[i], line[i + 1], this.time);
                     //points = points.concat(lonlats);
-                    points= [...points,...lonlats]
+                    points = [...points, ...lonlats]
                 }
             }
             // for (let [key, value] of line) {

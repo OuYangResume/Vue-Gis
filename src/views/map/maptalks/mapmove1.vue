@@ -9,8 +9,8 @@
 </template>
 <script>
 import * as maptalks from "maptalks";
-//import Path_Animation from "./components/mapmove.js";
-import Path_Animation from "routermove";
+import Path_Animation from "./components/mapmove.js";
+//import Path_Animation from "routermove";
 export default {
   data() {
     return {
@@ -45,7 +45,9 @@ export default {
           [114.32450763502036, 31.667512417065313],
           [114.32450763502036, 36.667512417065313],
           [116.32450763502036, 35.667512417065313]
-        ]
+        ],
+        speed:2,
+        isLineShow:true
       };
       vm.path = new Path_Animation(option);
       vm.addMakerLayer();
@@ -113,21 +115,39 @@ export default {
         [116.32450763502036, 35.667512417065313]
       ];
       //this.path.setData(lineData);
-      this.path.setSpeed(4);
-      let style = {
+      //this.path.setSpeed(4);
+      let markerstyle = {
         markerFile: "http://localhost:8081/static/images/mouseStyle.png",
         markerWidth: 29,
         markerHeight: 29,
         markerDy: 15
       };
-      this.path.setMarkerStyle(style);
+      let linestyle ={
+        lineColor: "red",
+            lineWidth: 6,
+            lineJoin: "round", //miter, round, bevel
+            lineCap: "round", //butt, round, square
+            lineDasharray: null, //dasharray, e.g. [10, 5, 5]
+            "lineOpacity ": 1
+      }
+      let style={
+        lineColor: "#fff",
+            lineWidth: 3,
+            lineJoin: "round", //miter, round, bevel
+            lineCap: "round", //butt, round, square
+            lineDasharray: null, //dasharray, e.g. [10, 5, 5]
+            "lineOpacity ": 1
+      }
+      this.path.setMarkerStyle(markerstyle);
+     // this.path.setLineStyle(linestyle);
+     // this.path.setDynamicLineStyle(style)
       this.path.open();
     },
     suspended() {
-      this.path.suspended();
+      this.path.isContinued(false);
     },
     continued() {
-      this.path.continued();
+      this.path.isContinued(true);
     },
     close() {
       this.path.close();
