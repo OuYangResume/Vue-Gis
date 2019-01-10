@@ -1,6 +1,6 @@
 <template>
-    <div class="mapinfowin">
-            <div class="head">{attri.type}<div class="close">X</div></div>
+    <div class="mapinfowin" id="head">
+            <div class="head"  @mousedown.prevent="mousedown">{attri.type}<div @click="close" class="close">X</div></div>
             <div class="main">
                 <div class="left">
                     <div class="title">人口总数</div>
@@ -20,7 +20,56 @@
 
 <script>
 export default {
-    name:'demo'
+    name:'demo',
+    methods:{
+      /**
+       * 监听拖动事件
+       */
+       mousedown(event) {
+        this.selectElement = document.getElementById("head")
+        var h = document.documentElement.clientHeight; //浏览器高度
+        var w = document.documentElement.clientWidth; //浏览器宽度
+        var oDiv = this.selectElement
+        this.selectElement.style.cursor = 'move'
+        this.isDowm = true
+        var disX = event.clientX - oDiv.offsetLeft
+        var disY = event.clientY - oDiv.offsetTop
+        var maxX = w - oDiv.clientWidth + disX;
+        var maxY = h - oDiv.clientHeight + disY;
+        document.onmousemove = function (ev) {
+          var ev = ev || event
+
+          if (disX >= ev.clientX) {
+            //					oDiv.style.top=ev.clientY-disY+'px';
+            oDiv.style.left = '0px';
+          } else if (ev.clientX >= maxX) {
+            oDiv.style.left = (w - oDiv.clientWidth) + 'px';
+          } else {
+            oDiv.style.left = ev.clientX - disX + 'px';
+          }
+
+          if (disY >= ev.clientY) {
+            //					oDiv.style.left=ev.clientX-disX+'px';
+            oDiv.style.top = '0px';
+          } else if (ev.clientY >= maxY) {
+            oDiv.style.top = (h - oDiv.clientHeight) + 'px';
+          } else {
+            oDiv.style.top = ev.clientY - disY + 'px';
+          }
+        }
+        document.onmouseup = function () {
+          document.onmousemove = null
+          document.onmouseup = null
+          oDiv.style.cursor = 'default'
+        }
+      },
+      /**
+       * 关闭
+       */
+      close(){
+          this.$emit('closeDialog')
+      }
+    }
 }
 </script>
 

@@ -5,18 +5,23 @@
     <div @click="suspended">暂停</div>
     <div @click="continued">继续</div>
     <div @click="close">清除</div>
+    <mapinfowin v-if="windowFlag" class="dragWindow"  v-on:closeDialog='closeWindow'></mapinfowin>
   </div>
 </template>
 <script>
+import mapinfowin from "./components/mapinfowin.vue";
 import * as maptalks from "maptalks";
-import Path_Animation from "./components/mapmove.js";
-//import Path_Animation from "routermove";
+//import Path_Animation from "./components/mapmove.js";
+import Path_Animation from "routermove";
+
 export default {
+  components: { mapinfowin },
   data() {
     return {
       map: null,
       path: null,
-      markerLayer: null
+      markerLayer: null,
+      windowFlag: false
     };
   },
   mounted() {
@@ -46,30 +51,13 @@ export default {
           [114.32450763502036, 36.667512417065313],
           [116.32450763502036, 35.667512417065313]
         ],
-        speed:2,
-        isLineShow:true
+        speed: 2,
+        isLineShow: false
       };
       vm.path = new Path_Animation(option);
       vm.addMakerLayer();
     },
-    addMakerLayer() {
-      var vm = this;
-      let point = [111.32450763502036, 31.667512417065313];
-      let geompoint = new maptalks.Marker(point, {
-        id: "geompoint1"
-        // symbol: {
-        //   markerFile: "http://localhost:8081/static/images/mouseStyle.png",
-        //   markerWidth: 20,
-        //   markerHeight: 20
-        // }
-      }).addTo(vm.markerLayer);
-      let style = {
-        markerFile: "http://localhost:8081/static/images/mouseStyle.png",
-        markerWidth: 29,
-        markerHeight: 29,
-        markerDy: -20
-      };
-      geompoint.setSymbol(style);
+    createInfoWin() {
       var content = `<div class="mapinfowin">
             <div class="head" id="head">{attri.type}<div class="close">X</div></div>
             <div class="main">
@@ -96,16 +84,59 @@ export default {
         autoOpenOn: "click", //set to null if not to open when clicking on marker
         autoCloseOn: "click"
       };
-      var infoWindow = new maptalks.ui.InfoWindow(options);
-      geompoint.setInfoWindow(infoWindow).on("mousedown", vm.infoWindowClick);
+      let infoWindow = new maptalks.ui.InfoWindow(options);
+      return infoWindow;
     },
+    closeWindow(){
+      this.windowFlag=false;
+    },
+    addMakerLayer() {
+      var vm = this;
+      let point = [111.32450763502036, 31.667512417065313];
+      let geompoint = new maptalks.Marker(point, {
+        id: "geompoint1"
+        // symbol: {
+        //   markerFile: "http://localhost:8081/static/images/mouseStyle.png",
+        //   markerWidth: 20,
+        //   markerHeight: 20
+        // }
+      }).addTo(vm.markerLayer);
+      let style = {
+        markerFile: "http://localhost:8081/static/images/mouseStyle.png",
+        markerWidth: 29,
+        markerHeight: 29,
+        markerDy: -20
+      };
+      geompoint.setSymbol(style);
+      let infoWindow = vm.createInfoWin();
+      // geompoint.setInfoWindow(infoWindow).on("mousedown", vm.infoWindowClick);
+      geompoint.on("click",function(e){
+        vm.windowFlag = true
+        vm.map.animateTo(
+              {
+                zoom: 10,
+                center: e.target._coordinates
+              },
+              {
+                duration: 1000,
+                easing: "out"
+              },
+              function(frame) {
+                if (frame.state.playState === "finished") {
+                  console.log("animation finished");
+                }
+              }
+            );
+      })
+    },
+
     infoWindowClick() {
-       setTimeout(function() {
-          const tell = document.getElementById("head");
-          tell.onclick = function() {
-            alert("打个电话");
-          };
-        }, 300);
+      setTimeout(function() {
+        const tell = document.getElementById("head");
+        tell.onclick = function() {
+          alert("打个电话");
+        };
+      }, 300);
     },
     open() {
       let lineData = [
@@ -122,25 +153,25 @@ export default {
         markerHeight: 29,
         markerDy: 15
       };
-      let linestyle ={
+      let linestyle = {
         lineColor: "red",
-            lineWidth: 6,
-            lineJoin: "round", //miter, round, bevel
-            lineCap: "round", //butt, round, square
-            lineDasharray: null, //dasharray, e.g. [10, 5, 5]
-            "lineOpacity ": 1
-      }
-      let style={
+        lineWidth: 6,
+        lineJoin: "round", //miter, round, bevel
+        lineCap: "round", //butt, round, square
+        lineDasharray: null, //dasharray, e.g. [10, 5, 5]
+        "lineOpacity ": 1
+      };
+      let style = {
         lineColor: "#fff",
-            lineWidth: 3,
-            lineJoin: "round", //miter, round, bevel
-            lineCap: "round", //butt, round, square
-            lineDasharray: null, //dasharray, e.g. [10, 5, 5]
-            "lineOpacity ": 1
-      }
+        lineWidth: 3,
+        lineJoin: "round", //miter, round, bevel
+        lineCap: "round", //butt, round, square
+        lineDasharray: null, //dasharray, e.g. [10, 5, 5]
+        "lineOpacity ": 1
+      };
       this.path.setMarkerStyle(markerstyle);
-     // this.path.setLineStyle(linestyle);
-     // this.path.setDynamicLineStyle(style)
+      // this.path.setLineStyle(linestyle);
+      // this.path.setDynamicLineStyle(style)
       this.path.open();
     },
     suspended() {
@@ -205,5 +236,12 @@ export default {
     }
   }
 }
+
+.dragWindow{
+    position:absolute;
+    left: 200px;
+    top: 65px;
+    z-index:300;
+  }
 </style>
 
