@@ -30,24 +30,51 @@ export default {
   methods: {
     initmap() {
       var vm = this;
-      vm.map = new maptalks.Map("map", {
-        center: [111.32450763502036, 31.667512417065313],
-        zoom: 8,
-        baseLayer: new maptalks.TileLayer("base", {
-          urlTemplate:
-            "http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
-          subdomains: ["a", "b", "c", "d"],
-          attribution:
-            '&copy; <a href="http://osm.org">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/">CARTO</a>'
-        })
-      });
+      if (this.map == null) {
+        this.map = new maptalks.Map("map", {
+          center: [113.93778701871952, 22.548375487173832],
+          zoom: 2,
+          minZoom: 1,
+          maxZoom: 11,
+          attribution: false,
+          view: {
+            projection: "EPSG:4490",
+            resolutions: [
+              0.0013732910156250004,
+              6.866455078125002e-4,
+              3.433227539062501e-4,
+              1.7166137695312505e-4,
+              8.583068847656253e-5,
+              4.2915344238281264e-5,
+              2.1457672119140632e-5,
+              1.0728836059570316e-5,
+              5.364418029785158e-6,
+              2.682209014892579e-6,
+              1.3411045074462895e-6
+            ],
+            fullExtent: {
+              top: 90,
+              bottom: 0,
+              left: 0,
+              right: 180
+            }
+          },
+          baseLayer: new maptalks.TileLayer("tile", {
+            tileSystem: [1, -1, -180, 90],
+            //urlTemplate: "http://39.108.100.163:8081/arcgis/rest/services/NSKSJ/DTVEC_QS_ZQ_NS/MapServer" + "/tile/{z}/{y}/{x}",
+             urlTemplate: "http://127.0.0.1:8082/api"+ "/tile/{z}/{y}/{x}",
+            //urlTemplate: "http://172.17.0.179/ArcGIS/rest/services/FTKSJ/NANSHAN_CGCS2000/MapServer" + "/tile/{z}/{y}/{x}",
+            subdomains: ["1", "2", "3", "4", "5"]
+          })
+        });
+      }
       vm.markerLayer = new maptalks.VectorLayer("vector1").addTo(vm.map);
       let option = {
         map: vm.map,
         lineData: [
-          [111.32450763502036, 31.667512417065313],
-          [113.32450763502036, 33.667512417065313],
-          [114.32450763502036, 31.667512417065313],
+          [113.93778701871952, 22.548375487173833],
+          [113.93378701871952, 22.543375487173832],
+          [113.95778701871952, 22.528375487173832],
           [114.32450763502036, 36.667512417065313],
           [116.32450763502036, 35.667512417065313]
         ],
