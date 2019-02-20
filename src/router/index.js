@@ -147,6 +147,12 @@ const router2 = [
             name: 'routerplay',
             component: () => import('@/views/map/maptalks/routerplay'),
             meta: { title: 'routerplay' }
+          },
+          {
+            path: 'snapto',
+            name: 'snapto',
+            component: () => import('@/views/map/maptalks/snapto'),
+            meta: { title: '吸附效果' }
           }
         ]
       }
