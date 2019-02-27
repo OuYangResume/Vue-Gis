@@ -1,14 +1,24 @@
 <template>
   <div>
+    <div class="choose">
+      <div @click="areaDialog =true">选择区划</div>
+      <div class="choose_content" v-show="areaDialog">
+          quhua
+        <ul v-for="(item,index) in parentCodeData" :key="index">
+          {{index}}+{{item._source.areaname}}
+        </ul>
+      </div>
+    </div>
     <div id="map"></div>
     <div v-on:click="open">开始</div>
     <div @click="suspended">暂停</div>
     <div @click="continued">继续</div>
     <div @click="close">清除</div>
-    <mapinfowin v-if="windowFlag" class="dragWindow"  v-on:closeDialog='closeWindow'></mapinfowin>
+    <mapinfowin v-if="windowFlag" class="dragWindow" v-on:closeDialog="closeWindow"></mapinfowin>
   </div>
 </template>
 <script>
+import axios from "axios"
 import mapinfowin from "./components/mapinfowin.vue";
 import * as maptalks from "maptalks";
 //import Path_Animation from "./components/mapmove.js";
@@ -21,13 +31,36 @@ export default {
       map: null,
       path: null,
       markerLayer: null,
-      windowFlag: false
+      windowFlag: false,
+      areaDialog: true,//区域主题的显示隐藏
+      parentCodeData:[],
     };
+  },
+  created(){
+    this.getAreaInfoByParentcode("440305")
   },
   mounted() {
     this.initmap();
   },
   methods: {
+    /**
+     * @description: 根据父code查询下一级的列表。
+     * @param {parentCode} 
+     * @return: 
+     */
+    getAreaInfoByParentcode(parentCode){
+      let vm =this;
+      axios({
+        method:"post",
+        url:"http://192.168.100.181:8990/cubeData/api/getAreaInfoByParentcode",
+        params:{
+          "parentCode":parentCode
+        }
+      }).then(res=>{
+        console.log(res)
+        vm.parentCodeData=res.data.data
+      })
+    },
     initmap() {
       var vm = this;
       if (this.map == null) {
@@ -62,7 +95,7 @@ export default {
           baseLayer: new maptalks.TileLayer("tile", {
             tileSystem: [1, -1, -180, 90],
             //urlTemplate: "http://39.108.100.163:8081/arcgis/rest/services/NSKSJ/DTVEC_QS_ZQ_NS/MapServer" + "/tile/{z}/{y}/{x}",
-             urlTemplate: "http://127.0.0.1:8082/api"+ "/tile/{z}/{y}/{x}",
+            urlTemplate: "http://127.0.0.1:8083/api" + "/tile/{z}/{y}/{x}",
             //urlTemplate: "http://172.17.0.179/ArcGIS/rest/services/FTKSJ/NANSHAN_CGCS2000/MapServer" + "/tile/{z}/{y}/{x}",
             subdomains: ["1", "2", "3", "4", "5"]
           })
@@ -114,8 +147,8 @@ export default {
       let infoWindow = new maptalks.ui.InfoWindow(options);
       return infoWindow;
     },
-    closeWindow(){
-      this.windowFlag=false;
+    closeWindow() {
+      this.windowFlag = false;
     },
     addMakerLayer() {
       var vm = this;
@@ -137,24 +170,24 @@ export default {
       geompoint.setSymbol(style);
       let infoWindow = vm.createInfoWin();
       // geompoint.setInfoWindow(infoWindow).on("mousedown", vm.infoWindowClick);
-      geompoint.on("click",function(e){
-        vm.windowFlag = true
+      geompoint.on("click", function(e) {
+        vm.windowFlag = true;
         vm.map.animateTo(
-              {
-                zoom: 10,
-                center: e.target._coordinates
-              },
-              {
-                duration: 1000,
-                easing: "out"
-              },
-              function(frame) {
-                if (frame.state.playState === "finished") {
-                  console.log("animation finished");
-                }
-              }
-            );
-      })
+          {
+            zoom: 10,
+            center: e.target._coordinates
+          },
+          {
+            duration: 1000,
+            easing: "out"
+          },
+          function(frame) {
+            if (frame.state.playState === "finished") {
+              console.log("animation finished");
+            }
+          }
+        );
+      });
     },
 
     infoWindowClick() {
@@ -264,11 +297,11 @@ export default {
   }
 }
 
-.dragWindow{
-    position:absolute;
-    left: 200px;
-    top: 65px;
-    z-index:300;
-  }
+.dragWindow {
+  position: absolute;
+  left: 200px;
+  top: 65px;
+  z-index: 300;
+}
 </style>
 
