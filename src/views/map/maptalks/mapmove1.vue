@@ -5,7 +5,9 @@
       <div class="choose_content" v-show="areaDialog">
           quhua
         <ul v-for="(item,index) in parentCodeData" :key="index">
-          {{index}}+{{item._source.areaname}}
+          <li @click="getChildData(item)">
+            {{index}}+{{item._source.areaname}}
+          </li>
         </ul>
       </div>
     </div>
@@ -43,6 +45,9 @@ export default {
     this.initmap();
   },
   methods: {
+    getChildData(item){
+      console.log(item);
+    },
     /**
      * @description: 根据父code查询下一级的列表。
      * @param {parentCode} 
