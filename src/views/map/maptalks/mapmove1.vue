@@ -1,16 +1,6 @@
 <template>
   <div>
-    <div class="choose">
-      <div @click="areaDialog =true">选择区划</div>
-      <div class="choose_content" v-show="areaDialog">
-          quhua
-        <ul v-for="(item,index) in parentCodeData" :key="index">
-          <li @click="getChildData(item)">
-            {{index}}+{{item._source.areaname}}
-          </li>
-        </ul>
-      </div>
-    </div>
+    <div class="tree"> <regional-tree></regional-tree></div>
     <div id="map"></div>
     <div v-on:click="open">开始</div>
     <div @click="suspended">暂停</div>
@@ -20,92 +10,81 @@
   </div>
 </template>
 <script>
-import axios from "axios"
+import regionalTree from "./components/regionalTree.vue"
+import axios from "axios";
 import mapinfowin from "./components/mapinfowin.vue";
 import * as maptalks from "maptalks";
 //import Path_Animation from "./components/mapmove.js";
 import Path_Animation from "routermove";
 
 export default {
-  components: { mapinfowin },
+  components: { mapinfowin ,regionalTree},
   data() {
     return {
       map: null,
       path: null,
       markerLayer: null,
-      windowFlag: false,
-      areaDialog: true,//区域主题的显示隐藏
-      parentCodeData:[],
+      windowFlag:false
     };
   },
-  created(){
-    this.getAreaInfoByParentcode("440305")
+  created() {
+  
   },
   mounted() {
     this.initmap();
   },
   methods: {
-    getChildData(item){
-      console.log(item);
-    },
-    /**
-     * @description: 根据父code查询下一级的列表。
-     * @param {parentCode} 
-     * @return: 
-     */
-    getAreaInfoByParentcode(parentCode){
-      let vm =this;
-      axios({
-        method:"post",
-        url:"http://192.168.100.181:8990/cubeData/api/getAreaInfoByParentcode",
-        params:{
-          "parentCode":parentCode
-        }
-      }).then(res=>{
-        console.log(res)
-        vm.parentCodeData=res.data.data
-      })
-    },
     initmap() {
       var vm = this;
-      if (this.map == null) {
-        this.map = new maptalks.Map("map", {
-          center: [113.93778701871952, 22.548375487173832],
-          zoom: 2,
-          minZoom: 1,
-          maxZoom: 11,
-          attribution: false,
-          view: {
-            projection: "EPSG:4490",
-            resolutions: [
-              0.0013732910156250004,
-              6.866455078125002e-4,
-              3.433227539062501e-4,
-              1.7166137695312505e-4,
-              8.583068847656253e-5,
-              4.2915344238281264e-5,
-              2.1457672119140632e-5,
-              1.0728836059570316e-5,
-              5.364418029785158e-6,
-              2.682209014892579e-6,
-              1.3411045074462895e-6
-            ],
-            fullExtent: {
-              top: 90,
-              bottom: 0,
-              left: 0,
-              right: 180
-            }
-          },
-          baseLayer: new maptalks.TileLayer("tile", {
-            tileSystem: [1, -1, -180, 90],
-            //urlTemplate: "http://39.108.100.163:8081/arcgis/rest/services/NSKSJ/DTVEC_QS_ZQ_NS/MapServer" + "/tile/{z}/{y}/{x}",
-            urlTemplate: "http://127.0.0.1:8083/api" + "/tile/{z}/{y}/{x}",
-            //urlTemplate: "http://172.17.0.179/ArcGIS/rest/services/FTKSJ/NANSHAN_CGCS2000/MapServer" + "/tile/{z}/{y}/{x}",
-            subdomains: ["1", "2", "3", "4", "5"]
-          })
-        });
-      }
+      // if (this.map == null) {
+      //   this.map = new maptalks.Map("map", {
+      //     center: [113.93778701871952, 22.548375487173832],
+      //     zoom: 2,
+      //     minZoom: 1,
+      //     maxZoom: 11,
+      //     attribution: false,
+      //     view: {
+      //       projection: "EPSG:4490",
+      //       resolutions: [
+      //         0.0013732910156250004,
+      //         6.866455078125002e-4,
+      //         3.433227539062501e-4,
+      //         1.7166137695312505e-4,
+      //         8.583068847656253e-5,
+      //         4.2915344238281264e-5,
+      //         2.1457672119140632e-5,
+      //         1.0728836059570316e-5,
+      //         5.364418029785158e-6,
+      //         2.682209014892579e-6,
+      //         1.3411045074462895e-6
+      //       ],
+      //       fullExtent: {
+      //         top: 90,
+      //         bottom: 0,
+      //         left: 0,
+      //         right: 180
+      //       }
+      //     },
+      //     baseLayer: new maptalks.TileLayer("tile", {
+      //       tileSystem: [1, -1, -180, 90],
+      //       //urlTemplate: "http://39.108.100.163:8081/arcgis/rest/services/NSKSJ/DTVEC_QS_ZQ_NS/MapServer" + "/tile/{z}/{y}/{x}",
+      //       //urlTemplate: "http://127.0.0.1:8083/api" + "/tile/{z}/{y}/{x}",
+      //       urlTemplate: "http://172.17.0.179/ArcGIS/rest/services/FTKSJ/NANSHAN_CGCS2000/MapServer" + "/tile/{z}/{y}/{x}",
+      //       subdomains: ["1", "2", "3", "4", "5"]
+      //     })
+      //   });
+      // }
+       vm.map = new maptalks.Map("map", {
+        center: [111.32450763502036, 31.667512417065313],
+        zoom: 8,
+        baseLayer: new maptalks.TileLayer("base", {
+          urlTemplate:
+            "http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+          subdomains: ["a", "b", "c", "d"],
+          attribution:
+            '&copy; <a href="http://osm.org">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/">CARTO</a>'
+        })
+      });
       vm.markerLayer = new maptalks.VectorLayer("vector1").addTo(vm.map);
       let option = {
         map: vm.map,
@@ -252,6 +231,14 @@ export default {
 };
 </script>
 <style lang="scss" >
+.wrap{
+  display: flex;
+}
+.tree{
+      width: 60%;
+    position: absolute;
+    z-index: 1;
+}
 #map {
   width: 100%;
   height: 500px;
