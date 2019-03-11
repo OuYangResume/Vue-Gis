@@ -2,21 +2,58 @@ import axios from 'axios'
 
 export default {
     install(Vue) {
+        //定义一个vue的全局变量，用于获取创建indexdb的生命周期
+        Vue.prototype.db=null;
+         /**
+         * @description: 初始化浏览器的indexdb数据库
+         * @param {type} 
+         * @return: 
+         */
+        Vue.prototype.initIndexDB = (callback) => {
+            /**
+             * @description: //创建数据库，第一个是数据库名,第二个是数据库的版本号
+             * @param {type} 
+             * @return: 同时返回一个IDBOpenDBRequest对象用于操作数据库
+             */
+            const request = window.indexedDB.open('myDatabase', 1);
+            request.onerror = function (event) {
+                console.log(event,'数据库打开报错');
+            };
+            //数据库升级触发的事件，创建数据库也会触发这个事件
+            request.onupgradeneeded = function (event) {
+                console.log(event,"onupgradeneeded")
+                Vue.prototype.db = event.target.result;
+                //新建数据库以后，第一件事是新建对象仓库，先判断是否存在
+                if (!Vue.prototype.db.objectStoreNames.contains('person')) {
+                  objectStore = Vue.prototype.db.createObjectStore('person', { keyPath: 'id' });
+                }
+              }
+            request.onsuccess = function (event) {
+                Vue.prototype.db = request.result;
+                console.log(Vue.prototype.db,'数据库创建成功');
+                if(typeof callback === 'function'){
+                    console.log('执行回调成功');
+                    callback();
+                  }
+            };
+        }
+
+
+
         Vue.prototype.testFun = function () {
             alert(1);
         },
             /*
             功能：框架两个div的显示隐藏;
             参数：lr分别是两个div的id;
-            active是点击后的样式
-            */
+                active是点击后的样式
+                */
             Vue.prototype.leftNavHidden = function (l, r) {
                 var l = $('#' + l);
                 var r = $('#' + r);
                 l.toggleClass('active');
                 r.toggleClass('active');
             },
-
             /*
             ** 转换请求参数 obj to str
             */

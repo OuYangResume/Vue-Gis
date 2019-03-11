@@ -1,24 +1,24 @@
 <template>
-    <div>
-        <p> 初次遇见 {{name}}</p>
+  <div>
+    <p>初次遇见 {{name}}</p>
 
-        <!-- 添加用户信息 -->
-      <form v-on:submit="addUser">
-          <input type="text" v-model="newUser.name" placeholder="Enter name">
-          <input type="text" v-model="newUser.email" placeholder="Enter eamil">
-          <input type="submit" value="Submit">
-      </form>
-        <!-- 展示用户信息 -->
-        <ul>
-            <li v-for="user in users ">
-              <input type="checkbox" class="toggle" v-model="user.contacted">
-              <span :class="{contacted:user.contacted}">
-                    {{user.name}}:{{user.email}}:{{user.phone}}
-              <button v-on:click="deleteUser(user)">X</button>
-              </span>
-              </li>
-        </ul>
-    </div>
+    <!-- 添加用户信息 -->
+    <!-- <form v-on:submit="addUser">
+      <input type="text" v-model="newUser.name" placeholder="Enter name">
+      <input type="text" v-model="newUser.email" placeholder="Enter eamil">
+      <input type="submit" value="Submit">
+    </form>-->
+    <!-- 展示用户信息 -->
+    <ul>
+      <li v-for="(user,index ) in users " :key="index">
+        <input type="checkbox" class="toggle" v-model="user.contacted">
+        <span :class="{contacted:user.contacted}">
+          {{user.name}}:{{user.email}}:{{user.phone}}
+          <button v-on:click="deleteUser(user)">X</button>
+        </span>
+      </li>
+    </ul>
+  </div>
 </template>
 <script>
 import axios from "axios";
@@ -29,21 +29,21 @@ export default {
       name: "axios",
       posts2: null,
       posts1: null,
-      newUser:{},
+      newUser: {}
     };
   },
   methods: {
-    addUser:function(e){
-          this.users.push({
-              name:this.newUser.name,
-              email:this.newUser.email,
-              contacted:false
-          });
-          e.preventDefault();
-      },
-      deleteUser:function(user){
-          this.users.splice(this.users.indexOf(user),1);
-      }
+    addUser: function(e) {
+      this.users.push({
+        name: this.newUser.name,
+        email: this.newUser.email,
+        contacted: false
+      });
+      e.preventDefault();
+    },
+    deleteUser: function(user) {
+      this.users.splice(this.users.indexOf(user), 1);
+    }
   },
   // 实例创建之后调用，一般获取数据
   created: function() {
@@ -73,13 +73,40 @@ export default {
     );
   },
 
-  mounted() {}
+  mounted() {
+    this.initData();
+  },
+  methods: {
+    /**
+     * @description: 从indexDb取数据
+     * @param {type}
+     * @return:
+     */
+    initData() {
+      let vm = this;
+      console.log(vm.db);
+      let objStore = vm.db
+        .transaction(["person"], "readwrite")
+        .objectStore("person");
+      let request = objStore.get(4);
+      request.onerror = function(event) {
+        console.log("事务失败");
+      };
+      request.onsuccess = function(event) {
+        if (request.result) {
+          console.log(request.result, "indexdb");
+        } else {
+          console.log("未获得数据记录");
+        }
+      };
+    }
+  }
 };
 </script>
 
 <style scoped>
-    .contacted{
-        text-decoration: line-through;
-    }
+.contacted {
+  text-decoration: line-through;
+}
 </style>
 
