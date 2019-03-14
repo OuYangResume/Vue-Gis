@@ -61,6 +61,14 @@ const router2 = [
         meta: {
           title: 'Mock'
         }
+      },
+      {
+        path: 'websocket',
+        name: 'websocket',
+        component: () => import('@/views/test/Websocket'),
+        meta: {
+          title: 'websocket'
+        }
       }
     ]
   },

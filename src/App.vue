@@ -71,7 +71,7 @@ export default {
           .then(res => {
             resolve(res);
           })
-          .catch(function(error) {
+          .catch(error => {
             reject(error);
           });
       });
