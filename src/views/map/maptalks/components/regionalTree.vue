@@ -3,7 +3,7 @@
  * @Author: oouyang
  * @LastEditors: Please set LastEditors
  * @Date: 2019-03-01 15:10:46
- * @LastEditTime: 2019-03-09 10:37:15
+ * @LastEditTime: 2019-03-18 15:31:53
  -->
 
 <template>
@@ -251,7 +251,6 @@ export default {
       margin-right: -1px;
     }
     li {
-      cursor: pointer;
       position: relative;
       cursor: pointer;
       padding: 7px 16px;

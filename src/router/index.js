@@ -69,7 +69,13 @@ const router2 = [
         meta: {
           title: 'websocket'
         }
-      }
+      },
+      {
+        path: 'VeeValidate',
+        name: 'VeeValidate',
+        component: () => import('@/views/test/VeeValidate'),
+        meta: { title: 'VeeValidate', icon: 'example' },
+      },
     ]
   },
   {
