@@ -167,7 +167,13 @@ const router2 = [
             name: 'snapto',
             component: () => import('@/views/map/maptalks/snapto'),
             meta: { title: '吸附效果' }
-          }
+          },
+          {
+            path: 'tile38',
+            name: 'tile38',
+            component: () => import('@/views/map/maptalks/tile38'),
+            meta: { title: 'tile38' }
+          },
         ]
       }
       //坐标拾取组件
