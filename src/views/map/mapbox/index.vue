@@ -1,33 +1,39 @@
+<!--
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-01-07 09:48:49
+ * @LastEditTime: 2019-10-17 16:44:04
+ * @LastEditors: Please set LastEditors
+ -->
 <template>
-<div>
-    <div id="mapid" :style="{height:height,width:width}">
+  <div>
+    <div id="mapid" :style="{height:height,width:width}"></div>
+    <div id="menu">
+      <input id="basic" type="radio" name="rtoggle" value="basic" />
+      <label for="basic">basic</label>
+      <input id="streets" type="radio" name="rtoggle" value="streets" checked="checked" />
+      <label for="streets">streets</label>
+      <input id="bright" type="radio" name="rtoggle" value="bright" />
+      <label for="bright">bright</label>
+      <input id="light" type="radio" name="rtoggle" value="light" />
+      <label for="light">light</label>
+      <input id="dark" type="radio" name="rtoggle" value="dark" />
+      <label for="dark">dark</label>
+      <input id="satellite" type="radio" name="rtoggle" value="satellite" />
+      <label for="satellite">satellite</label>
     </div>
-    <div id='menu'>       
-    <input id='basic' type='radio' name='rtoggle' value='basic' >
-    <label for='basic'>basic</label>
-    <input id='streets' type='radio' name='rtoggle' value='streets' checked='checked'>
-    <label for='streets'>streets</label>
-    <input id='bright' type='radio' name='rtoggle' value='bright'>
-    <label for='bright'>bright</label>
-    <input id='light' type='radio' name='rtoggle' value='light'>
-    <label for='light'>light</label>
-    <input id='dark' type='radio' name='rtoggle' value='dark'>
-    <label for='dark'>dark</label>
-    <input id='satellite' type='radio' name='rtoggle' value='satellite'>
-    <label for='satellite'>satellite</label>
-    </div>
-<div>
-    <el-row>
-        <el-button plain>使用element-ui</el-button>
+    <div>
+      <el-row>
+        <el-button plain @click="addpop">使用element-ui</el-button>
         <el-button type="primary" plain v-on:click="measureLine()">测量距离</el-button>
-    </el-row>
-</div>
-    
-</div>
+      </el-row>
+    </div>
+  </div>
 </template>
 
 <script>
 import mapboxgl from "mapbox-gl";
+import { showPopover,closePopover } from "./components/Popup";
 export default {
   props: {
     width: {
@@ -41,8 +47,7 @@ export default {
   },
   data() {
     return {
-        layerStyle:['basic','streets','bright','light','dark','satellite'],
-
+      layerStyle: ["basic", "streets", "bright", "light", "dark", "satellite"]
     };
   },
   methods: {
@@ -65,8 +70,21 @@ export default {
           map.setStyle("mapbox://styles/mapbox/" + layerId + "-v9");
         };
       }
+      const coordinates = [113,30]
+        
+      showPopover("oouyang", map, {
+        coordinates,
+        width: 450,
+        // height: 400,
+        autoCenter: false,
+      });
     },
-     measureLine(){}
+    measureLine() {
+      closePopover()
+    },
+    addpop(){
+      
+    }
   },
   mounted() {
     this.initMap();

@@ -19,6 +19,10 @@ export default {
       this.markerList = data.data.result3.objects;
       this.drawMarker();
     });
+
+     this.getAllByKey('fleet').then(data => {
+      console.log(data);
+    });
   },
   mounted() {
     this.initMap();
@@ -73,6 +77,25 @@ export default {
       });
     },
     /**
+     * @description: 请求key下的所有数据
+     * @param {type} 
+     * @return: 
+     */
+    getAllByKey(key){
+        let vm = this;
+      let url = "http://localhost:8082/tile38/getAllByKey";
+      return axios({
+        method: "get",
+        url: url,
+        params:{
+            key:key
+        }
+      }).then(res => {
+        console.log(res);
+        return res;
+      });
+    },
+    /**
      * @description: 绘制mark点
      * @param {type}
      * @return:
@@ -93,6 +116,11 @@ export default {
         this.markerVectorLayer.addGeometry(point);
       }
     },
+    /**
+     * @description: 绘制缓冲区
+     * @param {type} 
+     * @return: 
+     */
     drawTurfTo() {
       var point = turf.point([-112.2693, 33.5123]);
       var buffered = turf.buffer(point, 1000, "meters");
