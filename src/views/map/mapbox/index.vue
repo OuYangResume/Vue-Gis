@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-01-07 09:48:49
- * @LastEditTime: 2019-10-17 16:44:04
+ * @LastEditTime: 2019-12-18 22:17:10
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -33,7 +33,9 @@
 
 <script>
 import mapboxgl from "mapbox-gl";
-import { showPopover,closePopover } from "./components/Popup";
+import { showPopover, closePopover } from "./components/Popup";
+
+let count = 1;
 export default {
   props: {
     width: {
@@ -70,20 +72,35 @@ export default {
           map.setStyle("mapbox://styles/mapbox/" + layerId + "-v9");
         };
       }
-      const coordinates = [113,30]
-        
-      showPopover("oouyang", map, {
-        coordinates,
-        width: 450,
-        // height: 400,
-        autoCenter: false,
+      this.mapClickEvent(map);
+    },
+    mapClickEvent(map) {
+      let vm = this;
+      map.on("click", e => {
+        console.log(e);
+        count = count + 2;
+        let lnglat = [e.lngLat.lng, e.lngLat.lat];
+        showPopover("oouyang", map, {
+          coordinates: lnglat,
+          width: 450,
+          // height: 400,
+          autoCenter: false,
+          closeLast: true,
+          count: count,
+          addpop: this.addpop,
+          jianpop:this.jianpop
+        });
       });
     },
+
     measureLine() {
-      closePopover()
+      closePopover();
     },
-    addpop(){
-      
+    addpop(name,count) {
+      console.log('1111',name,count)
+    },
+    jianpop(count){
+      console.log('22222',count)
     }
   },
   mounted() {

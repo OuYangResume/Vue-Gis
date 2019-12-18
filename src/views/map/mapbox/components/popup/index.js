@@ -2,13 +2,14 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-10-14 11:23:30
- * @LastEditTime: 2019-10-17 16:31:04
+ * @LastEditTime: 2019-12-18 22:31:28
  * @LastEditors: Please set LastEditors
  */
 import Vue from 'vue';
 import { Popup, Coordinate } from 'mapbox-gl';
 
 import * as components from './src';
+import store from '../../../../../vuex/store'
 
 let currentPopup;
 let instance;
@@ -51,7 +52,8 @@ const defaultCallback = action => {
 // 创建实例
 const initInstance = (data) => {
     instance = new Template({
-        data,
+        propsData: data,
+        store: store,//必须引用一下，否则弹窗组件不能使用vuex
         el: document.createElement('div'),
     });
     instance.callback = defaultCallback;
@@ -105,7 +107,7 @@ const showPopover = function (type, map, options = {}) {
 
     currentPopup = popover;
     popovers.push(currentPopup);
-
+    //将弹窗位置设置为地图的中心
     if (options.autoCenter) {
         map.animateTo({
             center: coords
